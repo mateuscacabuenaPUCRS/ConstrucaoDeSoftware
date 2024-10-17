@@ -45,6 +45,16 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+### With Docker
+
+```bash
+# Build the container
+$ docker compose up --build --watch
+
+# Access the container
+$ docker exect -it {{container_id}} sh
+```
+
 ## Run tests
 
 ```bash
