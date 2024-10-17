@@ -17,23 +17,23 @@ services:
     env_file:
       - .env
 
-  # database:
-  #   build:
-  #     context: ./database
-  #     dockerfile: Dockerfile
-  #   container_name: cs-t1-database
-  #   ports:
-  #     - "3306:3306"
-  #   volumes:
-  #     - ./database/dumps:/data/db
-  #   environment:
-  #     - POSTGRES_USER=postgres
-  #     - POSTGRES_PASSWORD=postgres
-  #     - POSTGRES_DB=cs-t1
-  #   networks:
-  #     - cs_t1_construcao
-  #   env_file:
-  #     - .env
+  database:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    container_name: cs-t1-database
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database/dumps:/data/db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=cs-t1
+    networks:
+      - cs_t1_construcao
+    env_file:
+      - .env
 
 networks:
   cs_t1_construcao:
