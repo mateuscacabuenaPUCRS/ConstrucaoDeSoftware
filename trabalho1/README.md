@@ -49,7 +49,10 @@ $ npm run start:prod
 
 ```bash
 # Build the container
-$ docker compose up --build --watch
+$ docker compose up --build
+
+# List all containers
+$ docker ps
 
 # Access the container
 $ docker exect -it {{container_id}} sh

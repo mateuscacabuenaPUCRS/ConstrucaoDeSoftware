@@ -1,12 +1,17 @@
+version: '3.8'
+
 services:
   backend:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: cs-t1-backend
     restart: always
     ports:
       - '3000:3000'
     volumes:
-      - .:/src
+      - .:/app  # Mount the current directory to /app in the container
+      - /app/node_modules  # Ensure that node_modules are not overwritten by the host
     networks:
       - cs_t1_construcao
     env_file:

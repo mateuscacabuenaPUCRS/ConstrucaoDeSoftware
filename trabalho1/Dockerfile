@@ -4,12 +4,12 @@ WORKDIR /app
 
 COPY package*.json ./
 
+RUN npm install
+
 COPY . .
+
+RUN mkdir -p node_modules/.cache && chmod -R 777 node_modules/.cache
 
 EXPOSE 3000
 
-RUN npm install
-
-RUN mkdir node_modules/.cache && chmod -R 777 node_modules/.cache
-
-CMD [ -d "node_modules" ] && npm run start:debug
+CMD ["npm", "run", "start:debug"]
