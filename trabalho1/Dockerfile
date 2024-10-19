@@ -4,13 +4,11 @@ WORKDIR /app
 
 COPY package*.json ./
 
-COPY prisma/* ./
+COPY prisma ./
 
 RUN npm install
 
 COPY . .
-
-RUN mkdir -p node_modules/.cache && chmod -R 777 node_modules/.cache
 
 # API Port and Prisma Port
 EXPOSE 3000 5555
