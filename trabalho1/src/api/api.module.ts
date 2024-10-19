@@ -3,10 +3,7 @@ import { UserModule } from './user/user.module';
 import { PostModule } from './post/post.module';
 
 @Module({
-  imports: [
-    UserModule,
-    PostModule,
-  ],
+  imports: [UserModule, PostModule],
   controllers: [],
   providers: [],
 })
