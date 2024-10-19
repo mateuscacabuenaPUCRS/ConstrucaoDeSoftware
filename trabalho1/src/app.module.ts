@@ -11,7 +11,5 @@ import configuration from 'config/configuration';
     }),
     ApiModule,
   ],
-  // controllers: [AppController],
-  // providers: [AppService],
 })
 export class AppModule {}
