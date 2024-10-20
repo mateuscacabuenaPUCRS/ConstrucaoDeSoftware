@@ -1,8 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { UserEntity } from "../user.entity"; // Certifique-se de que a entidade esteja no caminho correto
-import { CreateUserDTO, UserDTO } from "../user.dto"; // Importação dos seus DTOs
+import { UserEntity } from "../entity/user.entity";
+import { UserDTO } from "../dto/user.dto";
+import { CreateUserDTO } from "../dto/create-user.dto";
 
 @Injectable()
 export class UserRepository {
@@ -20,9 +21,10 @@ export class UserRepository {
   // Método para buscar todos os usuários
   async getAll(): Promise<UserDTO[]> {
     const users = await this.userRepository.find();
-    return users.map((user) => this.toUserDTO(user)); // Converter para UserDTO
+    return users.map((user) => this.toUserDTO(user));
   }
 
+  // Método para buscar um usuário pelo ID
   async getById(id: number): Promise<UserDTO> {
     const user = await this.userRepository.findOne({ where: { id } });
     return this.toUserDTO(user);
