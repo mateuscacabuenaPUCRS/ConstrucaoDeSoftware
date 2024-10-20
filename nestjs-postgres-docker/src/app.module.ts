@@ -17,7 +17,7 @@ import { EventEntity } from "./event/entity/event.entity";
       entities: [UserEntity, EventEntity],
       synchronize: true, // Sincroniza as entidades com o banco de dados automaticamente
     }),
-    TypeOrmModule.forFeature([UserEntity, EventEntity]),
+    TypeOrmModule.forFeature([UserEntity, EventEntity]), // Importa as entidades para serem usadas nos módulos
     UserModule,
     EventModule,
   ],

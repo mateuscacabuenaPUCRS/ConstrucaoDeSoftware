@@ -6,9 +6,7 @@ import { EventService } from "./service/event.service";
 import { EventRepository } from "./repository/event.repository";
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([EventEntity]),
-  ],
+  imports: [TypeOrmModule.forFeature([EventEntity])],
   controllers: [EventController],
   providers: [EventService, EventRepository],
 })
