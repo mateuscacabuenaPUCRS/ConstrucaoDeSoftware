@@ -5,14 +5,11 @@ export class CreateEventDTO {
   name: string;
 
   @ApiProperty()
-  date: string;
-
+  type: string;
+  
   @ApiProperty()
   location: string;
 
   @ApiProperty()
-  price: number;
-  
-  @ApiProperty()
-  description: string;
+  date: string; //TODO: type
 }
