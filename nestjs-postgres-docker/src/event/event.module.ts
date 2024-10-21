@@ -4,10 +4,12 @@ import { EventEntity } from "./entity/event.entity";
 import { EventController } from "./controller/event.controller";
 import { EventService } from "./service/event.service";
 import { EventRepository } from "./repository/event.repository";
+import { TicketRepository } from "src/ticket/repository/ticket.repository";
+import { TicketEntity } from "src/ticket/entity/ticket.entity";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([EventEntity])],
+  imports: [TypeOrmModule.forFeature([EventEntity, TicketEntity])],
   controllers: [EventController],
-  providers: [EventService, EventRepository],
+  providers: [EventService, EventRepository, TicketRepository],
 })
 export class EventModule {}

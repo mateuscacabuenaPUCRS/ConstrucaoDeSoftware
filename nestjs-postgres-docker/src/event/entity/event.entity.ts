@@ -1,4 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
+
+import { TicketEntity } from 'src/ticket/entity/ticket.entity';
+import { TenantEntity } from 'src/tenant/entity/tenant.entity';
 
 @Entity('event')
 export class EventEntity {
@@ -9,14 +12,22 @@ export class EventEntity {
   name: string;
 
   @Column()
-  date: string; // TODO: Date type
+  type: string;
 
   @Column()
   location: string;
 
-  @Column('float')
-  price: number;
+  //TODO: Definir uma coluna que atualiza automaticamente a data e hora em cada modificação.
 
-  @Column()
-  description: string;
+  @Column({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
+  createdAt: Date;
+
+  @OneToMany(() => TicketEntity, (ticketEntity) => ticketEntity.event)
+  tickets: TicketEntity[];
+
+  @Column({ nullable: true })
+  tenantId: number;
+
+  @ManyToOne(() => TenantEntity, (tenant) => tenant.events)
+  tenant: TenantEntity;
 }

@@ -2,14 +2,17 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateEventDTO {
   @ApiProperty()
+  tenantId: number; //adm do evento
+  
+  @ApiProperty()
   name: string;
 
   @ApiProperty()
-  type: string;
+  type: string; //TODO: 
   
   @ApiProperty()
   location: string;
 
   @ApiProperty()
-  date: string; //TODO: type
+  createdAt: Date;
 }
