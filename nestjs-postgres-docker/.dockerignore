@@ -1,0 +1,36 @@
+# Ignore custom scripts directory
+scripts
+
+# Ignore .aws and .terraform directories
+.aws
+.terraform
+
+# Ignore node_modules directory
+node_modules
+
+# Ignore logs
+logs
+*.log
+
+# Ignore temporary files
+tmp
+*.tmp
+
+# Ignore build directories
+dist
+build
+
+# Ignore environment variables
+.env
+
+# Ignore Docker files
+Dockerfile
+docker-compose*.yml
+
+# Ignore IDE/editor specific files
+.vscode
+.idea
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
