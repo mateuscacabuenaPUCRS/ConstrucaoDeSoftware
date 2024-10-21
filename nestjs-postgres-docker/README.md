@@ -1,9 +1,6 @@
 ## Project setup
 
 ```bash
-# Install dependencies
-$ npm install
-
 # Build the containers
 $ docker compose up --build
 
@@ -12,6 +9,22 @@ $ docker ps
 
 # Access the container (optional)
 $ docker exect -it {{container_id}} sh
+```
+
+## Terraform Actions
+
+```bash
+# Initialize terraform environment
+$ terraform init
+
+# See what will be setup
+$ terraform plan
+
+# Push changes to cloud
+$ terraform apply
+
+# "Rollback" Changes
+$ terraform destroy
 ```
 
 ## Run tests
