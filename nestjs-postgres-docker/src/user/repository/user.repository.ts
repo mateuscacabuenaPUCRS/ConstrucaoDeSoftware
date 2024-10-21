@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository, DeepPartial } from "typeorm";
-import { UserEntity } from "../entity/user.entity";
-import { UserDTO } from "../dto/user.dto";
+import { Repository } from "typeorm";
 import { CreateUserDTO } from "../dto/create-user.dto";
+import { UserDTO } from "../dto/user.dto";
+import { UserEntity } from "../entity/user.entity";
 
 @Injectable()
 export class UserRepository {
@@ -13,8 +13,8 @@ export class UserRepository {
   ) {}
 
   // Método auxiliar para converter a entidade para UserDTO
-  private toUserDTO({ id, email, name, tenantId }: UserEntity): UserDTO {
-    return { id, email, name, tenantId };
+  private toUserDTO({ id, email, name, receiveNotifications, tenantId }: UserEntity): UserDTO {
+    return { id, email, name, receiveNotifications, tenantId };
   }
 
   // Método para buscar todos os usuários
@@ -56,5 +56,12 @@ export class UserRepository {
     const user = await this.userRepository.findOne({ where: { email } });
 
     return this.toUserDTO(user); //Problema: quando não há user, retorna null e não consegue converter para DTO
+  }
+
+  async toggleNotifications(id: number): Promise<UserDTO> {
+    const user = await this.userRepository.findOne({ where: { id } });
+    user.receiveNotifications = !user.receiveNotifications;
+    await this.userRepository.save(user);
+    return this.toUserDTO(user);
   }
 }

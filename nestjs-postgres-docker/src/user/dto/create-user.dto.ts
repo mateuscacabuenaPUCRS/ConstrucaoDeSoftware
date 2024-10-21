@@ -13,6 +13,12 @@ export class CreateUserDTO {
   })
   name: string;
 
+  @ApiProperty({
+    description: "Receive notifications",
+    default: false,
+  })
+  receiveNotifications: boolean;
+
   @ApiProperty()
   tenantId: number;
 }

@@ -1,17 +1,15 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { EventEntity } from "./event/entity/event.entity";
+import { EventModule } from "./event/event.module";
+import { TenantEntity } from "./tenant/entity/tenant.entity";
+import { TenantModule } from "./tenant/tenant.module";
+import { TicketEntity } from "./ticket/entity/ticket.entity";
+import { TicketModule } from "./ticket/ticket.module";
+import { TransactionEntity } from "./transaction/entity/transaction.entity";
+import { TransactionModule } from "./transaction/transaction.module";
 import { UserEntity } from "./user/entity/user.entity";
 import { UserModule } from "./user/user.module";
-import { EventModule } from "./event/event.module";
-import { EventEntity } from "./event/entity/event.entity";
-import { TicketEntity } from "./ticket/entity/ticket.entity";
-import { TransactionEntity } from "./transaction/entity/transaction.entity";
-import { NotificationPreferencesEntity } from "./notificationPreferences/entity/notificationPreferences";
-import { TenantEntity } from "./tenant/entity/tenant.entity";
-import { NotificationPreferencesModule } from "./notificationPreferences/notification-preferences.module";
-import { TenantModule } from "./tenant/tenant.module";
-import { TicketModule } from "./ticket/ticket.module";
-import { TransactionModule } from "./transaction/transaction.module";
 
 @Module({
   imports: [
@@ -26,7 +24,6 @@ import { TransactionModule } from "./transaction/transaction.module";
         UserEntity,
         EventEntity,
         TicketEntity,
-        NotificationPreferencesEntity,
         TransactionEntity,
         TenantEntity,
       ],
@@ -36,13 +33,11 @@ import { TransactionModule } from "./transaction/transaction.module";
       UserEntity,
       EventEntity,
       TicketEntity,
-      NotificationPreferencesEntity,
       TransactionEntity,
       TenantEntity,
     ]), // Importa as entidades para serem usadas nos módulos
     UserModule,
     EventModule,
-    NotificationPreferencesModule,
     TenantModule,
     TicketModule,
     TransactionModule,

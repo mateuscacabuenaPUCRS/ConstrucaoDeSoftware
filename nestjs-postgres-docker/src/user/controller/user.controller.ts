@@ -1,8 +1,8 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put } from "@nestjs/common";
-import { UserService } from "../service/user.service";
-import { UserDTO } from "../dto/user.dto";
-import { CreateUserDTO } from "../dto/create-user.dto";
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Patch, Post, Put } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
+import { CreateUserDTO } from "../dto/create-user.dto";
+import { UserDTO } from "../dto/user.dto";
+import { UserService } from "../service/user.service";
 
 @ApiTags("User")
 @Controller("user")
@@ -78,6 +78,25 @@ export class UserController {
         throw error;
       }
       throw new HttpException('Failed to delete user', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @Patch(":id/receiveNotifications")
+  async toggleNotifications(@Param("id") id: number): Promise<UserDTO> {
+    console.log(id);
+    try {
+      const user = await this.userService.getUserById(id);
+      console.log(user);
+      if (!user) {
+        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      }
+      return await this.userService.toggleNotifications(id);
+    } catch (error) {
+      console.log(error);
+      if (error.status === HttpStatus.NOT_FOUND) {
+        throw error;
+      }
+      throw new HttpException('Failed to toggle notifications', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }
