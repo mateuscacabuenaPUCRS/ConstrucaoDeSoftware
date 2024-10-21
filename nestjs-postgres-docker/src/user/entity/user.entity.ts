@@ -1,10 +1,9 @@
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
+  Entity,
   ManyToOne,
   OneToMany,
-  OneToOne,
+  PrimaryGeneratedColumn
 } from "typeorm";
 
 import { TenantEntity } from "src/tenant/entity/tenant.entity";
@@ -12,8 +11,6 @@ import { TenantEntity } from "src/tenant/entity/tenant.entity";
 import { TicketEntity } from "src/ticket/entity/ticket.entity";
 
 import { TransactionEntity } from "src/transaction/entity/transaction.entity";
-
-import { NotificationPreferencesEntity } from "src/notificationPreferences/entity/notificationPreferences";
 
 @Entity("user")
 export class UserEntity {
@@ -25,6 +22,9 @@ export class UserEntity {
 
   @Column()
   name: string;
+
+  @Column({default: false})
+  receiveNotifications: boolean;
 
   @Column({ nullable: true })
   tenantId: number;
@@ -40,10 +40,4 @@ export class UserEntity {
     (transactionEntity) => transactionEntity.buyer
   )
   purchases: TransactionEntity[];
-
-  @OneToOne(
-    () => NotificationPreferencesEntity,
-    (preferences) => preferences.user
-  )
-  notificationPreferences: NotificationPreferencesEntity;
 }

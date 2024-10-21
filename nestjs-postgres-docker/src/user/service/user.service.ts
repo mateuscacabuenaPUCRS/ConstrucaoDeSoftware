@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { UserRepository } from "../repository/user.repository";
-import { UserDTO } from "../dto/user.dto";
 import { CreateUserDTO } from "../dto/create-user.dto";
+import { UserDTO } from "../dto/user.dto";
+import { UserRepository } from "../repository/user.repository";
 
 @Injectable()
 export class UserService {
@@ -29,5 +29,9 @@ export class UserService {
 
   async login(email: string): Promise<UserDTO> {
     return this.userRepository.login(email);
+  }
+
+  async toggleNotifications(id: number): Promise<UserDTO> {
+    return this.userRepository.toggleNotifications(id);
   }
 }
