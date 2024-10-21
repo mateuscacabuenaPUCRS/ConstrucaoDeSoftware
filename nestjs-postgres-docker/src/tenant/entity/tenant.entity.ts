@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 
-import { UserEntity } from "src/user/entity/user.entity";
-import { EventEntity } from "src/event/entity/event.entity";
+import { UserEntity } from "../../user/entity/user.entity";
+import { EventEntity } from "../../event/entity/event.entity";
 
 @Entity("tenant")
 export class TenantEntity {

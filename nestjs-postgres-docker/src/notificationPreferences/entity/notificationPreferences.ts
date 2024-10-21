@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
 
-import { UserEntity } from 'src/user/entity/user.entity';
+import { UserEntity } from '../../user/entity/user.entity';
 
 @Entity('notificationPreferences')
 export class NotificationPreferencesEntity {

@@ -7,13 +7,13 @@ import {
   OneToOne,
 } from "typeorm";
 
-import { TenantEntity } from "src/tenant/entity/tenant.entity";
+import { TenantEntity } from "../../tenant/entity/tenant.entity";
 
-import { TicketEntity } from "src/ticket/entity/ticket.entity";
+import { TicketEntity } from "../../ticket/entity/ticket.entity";
 
-import { TransactionEntity } from "src/transaction/entity/transaction.entity";
+import { TransactionEntity } from "../../transaction/entity/transaction.entity";
 
-import { NotificationPreferencesEntity } from "src/notificationPreferences/entity/notificationPreferences";
+import { NotificationPreferencesEntity } from "../../notificationPreferences/entity/notificationPreferences";
 
 @Entity("user")
 export class UserEntity {

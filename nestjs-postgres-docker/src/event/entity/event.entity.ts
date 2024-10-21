@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
 
-import { TicketEntity } from 'src/ticket/entity/ticket.entity';
-import { TenantEntity } from 'src/tenant/entity/tenant.entity';
+import { TicketEntity } from '../../ticket/entity/ticket.entity';
+import { TenantEntity } from '../../tenant/entity/tenant.entity';
 
 @Entity('event')
 export class EventEntity {

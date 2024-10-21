@@ -1,10 +1,10 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToOne } from "typeorm";
 
-import { EventEntity } from "src/event/entity/event.entity";
+import { EventEntity } from "../../event/entity/event.entity";
 
-import { UserEntity } from "src/user/entity/user.entity";
+import { UserEntity } from "../../user/entity/user.entity";
 
-import { TransactionEntity } from 'src/transaction/entity/transaction.entity';
+import { TransactionEntity } from '../../transaction/entity/transaction.entity';
 
 
 @Entity("ticket")

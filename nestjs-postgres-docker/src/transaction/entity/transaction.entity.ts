@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, OneToMany } from "typeorm";
 
-import { UserEntity } from "src/user/entity/user.entity";
+import { UserEntity } from "../../user/entity/user.entity";
 
-import { TicketEntity } from 'src/ticket/entity/ticket.entity';
+import { TicketEntity } from '../../ticket/entity/ticket.entity';
 
 
 @Entity('transaction')
