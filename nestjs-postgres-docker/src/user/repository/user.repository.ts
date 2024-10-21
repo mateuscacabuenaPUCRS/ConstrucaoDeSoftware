@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Repository, DeepPartial } from "typeorm";
 import { UserEntity } from "../entity/user.entity";
 import { UserDTO } from "../dto/user.dto";
 import { CreateUserDTO } from "../dto/create-user.dto";
@@ -13,9 +13,8 @@ export class UserRepository {
   ) {}
 
   // Método auxiliar para converter a entidade para UserDTO
-  private toUserDTO(user: UserEntity): UserDTO {
-    const { id, email, name } = user;
-    return { id, email, name };
+  private toUserDTO({ id, email, name, tenantId }: UserEntity): UserDTO {
+    return { id, email, name, tenantId };
   }
 
   // Método para buscar todos os usuários
@@ -37,10 +36,25 @@ export class UserRepository {
     return this.toUserDTO(user); // Retorna o usuário salvo como DTO
   }
 
+  // Método para atualizar um usuário
+  async update(id: number, createUserDTO: CreateUserDTO): Promise<UserDTO> {
+    const user = await this.userRepository.findOne({ where: { id } }); // Busca o usuário pelo ID
+    this.userRepository.merge(user, createUserDTO); // Atualiza os dados do usuário
+    await this.userRepository.save(user); // Salva no banco de dados
+    return this.toUserDTO(user); // Retorna o usuário atualizado como DTO
+  }
+
   // Método para deletar um usuário
   async delete(id: number): Promise<UserDTO> {
     const user = await this.userRepository.findOne({ where: { id } });
     await this.userRepository.remove(user);
     return this.toUserDTO(user);
+  }
+
+  // Método para realizar login
+  async login(email: string): Promise<UserDTO> {
+    const user = await this.userRepository.findOne({ where: { email } });
+
+    return this.toUserDTO(user); //Problema: quando não há user, retorna null e não consegue converter para DTO
   }
 }

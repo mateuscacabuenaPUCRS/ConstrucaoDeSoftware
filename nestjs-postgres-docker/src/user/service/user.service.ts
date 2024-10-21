@@ -19,7 +19,15 @@ export class UserService {
     return this.userRepository.add(createUserDTO);
   }
 
+  async updateUser(id: number, createUserDTO: CreateUserDTO): Promise<UserDTO> {
+    return this.userRepository.update(id, createUserDTO);
+  }
+
   async deleteUser(id: number): Promise<UserDTO> {
     return this.userRepository.delete(id);
+  }
+
+  async login(email: string): Promise<UserDTO> {
+    return this.userRepository.login(email);
   }
 }
