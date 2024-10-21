@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { TransactionDTO } from "../dto/transaction.dto";
 import { TransactionRepository } from "../repository/transaction.repository";
-import { UserRepository } from "src/user/repository/user.repository";
-import { TicketRepository } from "src/ticket/repository/ticket.repository";
+import { UserRepository } from "../../user/repository/user.repository";
+import { TicketRepository } from "../../ticket/repository/ticket.repository";
 
 @Injectable()
 export class TransactionService {
