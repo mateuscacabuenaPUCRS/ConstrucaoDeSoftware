@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Set variables
+# Set variables (change these values to match your Docker Hub account and image name)
 IMAGE_NAME="felipefreitassilva/csw24-grupob-tickets"
 TAG="latest"
 
@@ -25,3 +25,6 @@ else
   echo "Error: Failed to push the Docker image."
   exit 1
 fi
+
+# Freeze the script to display the output
+read -p "Press any key to continue..."
