@@ -4,10 +4,16 @@ export class UserDTO {
   @ApiProperty()
   id: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: "Email of the user",
+    default: "user@email.com" 
+  })
   email: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: "Name of the user",
+    default: "John Doe"
+  })
   name: string;
 
   @ApiProperty()

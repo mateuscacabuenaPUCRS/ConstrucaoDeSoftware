@@ -2,21 +2,33 @@ import { ApiProperty } from '@nestjs/swagger';
 import { TicketDTO } from 'src/ticket/dto/ticket.dto';
 
 export class EventDTO {
-  @ApiProperty()
+  @ApiProperty({})
   id: number;
 
   @ApiProperty()
   tenantId: number; //adm do evento
   
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Name of the event',
+    default: 'NestJS Event',
+  })
   name: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Type of the event',
+    default: 'NestJS Type',
+  })
   type: string;
   
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Location of the event',
+    default: 'São Paulo',
+  })
   location: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Date of the event',
+    default: '2021-01-01',
+  })
   createdAt: Date;
 }
