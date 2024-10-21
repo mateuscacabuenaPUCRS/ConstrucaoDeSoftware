@@ -141,9 +141,6 @@ Alternatively, you can run the tests inside the container (recommended).
 # unit tests
 $ npm run test
 
-# e2e tests
-$ npm run test:e2e
-
 # test coverage
 $ npm run test:cov
 ```
