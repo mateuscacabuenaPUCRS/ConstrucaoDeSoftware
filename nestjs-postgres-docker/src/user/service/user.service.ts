@@ -2,9 +2,9 @@ import { Injectable } from "@nestjs/common";
 import { CreateUserDTO } from "../dto/create-user.dto";
 import { UserDTO } from "../dto/user.dto";
 import { UserRepository } from "../repository/user.repository";
-import { TicketDTO } from "src/ticket/dto/ticket.dto";
-import { TransactionRepository } from "src/transaction/repository/transaction.repository";
-import { TicketRepository } from "src/ticket/repository/ticket.repository";
+import { TicketDTO } from "../../ticket/dto/ticket.dto";
+import { TransactionRepository } from "../../transaction/repository/transaction.repository";
+import { TicketRepository } from "../../ticket/repository/ticket.repository";
 
 @Injectable()
 export class UserService {

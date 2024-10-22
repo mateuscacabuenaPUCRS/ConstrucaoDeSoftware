@@ -3,7 +3,6 @@ import { ApiTags } from '@nestjs/swagger';
 import { EventService } from "../service/event.service";
 import { EventDTO } from "../dto/event.dto";
 import { CreateEventDTO } from "../dto/create-event.dto";
-import { TicketDTO } from "src/ticket/dto/ticket.dto";
 
 @ApiTags("Event")
 @Controller("event")

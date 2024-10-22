@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { CreateTicketDTO } from "../dto/create-ticket.dto";
 import { TicketRepository } from "../repository/ticket.repository";
-import { TransactionRepository } from "src/transaction/repository/transaction.repository";
+import { TransactionRepository } from "../../transaction/repository/transaction.repository";
 
 @Injectable()
 export class TicketService {

@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { TicketDTO } from 'src/ticket/dto/ticket.dto';
 
 export class EventDTO {
   @ApiProperty({})

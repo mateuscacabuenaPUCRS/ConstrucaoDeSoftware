@@ -14,7 +14,7 @@ import { ApiTags } from "@nestjs/swagger";
 import { TenantService } from "../service/tenant.service";
 import { TenantDTO } from "../dto/tenant.dto";
 import { CreateTenantDTO } from "../dto/create-tenant.dto";
-import { TicketDTO } from "src/ticket/dto/ticket.dto";
+import { TicketDTO } from "../../ticket/dto/ticket.dto";
 
 @ApiTags("Tenant")
 @Controller("tenant")

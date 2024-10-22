@@ -2,8 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { TenantDTO } from "../dto/tenant.dto";
 import { TenantRepository } from "../repository/tenant.repository";
 import { CreateTenantDTO } from "../dto/create-tenant.dto";
-import { TicketDTO } from "src/ticket/dto/ticket.dto";
-import { TicketRepository } from "src/ticket/repository/ticket.repository";
+import { TicketDTO } from "../../ticket/dto/ticket.dto";
+import { TicketRepository } from "../../ticket/repository/ticket.repository";
 
 @Injectable()
 export class TenantService {
