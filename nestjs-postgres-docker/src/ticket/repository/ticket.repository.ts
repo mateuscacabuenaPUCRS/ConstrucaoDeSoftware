@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository, DeepPartial } from "typeorm";
+import { Repository } from "typeorm";
 import { TicketEntity } from "../entity/ticket.entity";
 import { TicketDTO } from "../dto/ticket.dto";
 import { CreateTicketDTO } from "../dto/create-ticket.dto";
@@ -20,7 +20,7 @@ export class TicketRepository {
     eventId,
     sellerId,
     tenantId,
-  }: TicketEntity & { tenantId?: number }): TicketDTO {
+  }: TicketEntity): TicketDTO {
     return {
       id,
       eventId,
@@ -66,13 +66,20 @@ export class TicketRepository {
 
   async findAvailableTickets(eventId: number): Promise<TicketDTO[]> {
     const tickets = await this.ticketRepository.find({
-      where: { event: { id: eventId }, status: "disponivel" },
+      where: { event: { id: eventId }, status: "available" },
     });
     return tickets.map(this.toTicketDTO);
   }
 
-  // TODO: fix this
-  async updateTicketAvailability(ticketIds: number[]): Promise<void> {
-    await this.ticketRepository.update(ticketIds, { status: "" });
+  async updateStatus(id: number, status: string): Promise<TicketDTO> {
+    let ticket = await this.ticketRepository.findOne({ where: { id } });
+    ticket.status = status;
+
+    await this.ticketRepository.save(ticket);
+    return this.toTicketDTO(ticket);
+  }
+
+  async deleteAll() {
+    await this.ticketRepository.delete({});
   }
 }

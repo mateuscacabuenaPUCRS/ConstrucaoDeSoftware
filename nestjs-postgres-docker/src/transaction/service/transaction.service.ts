@@ -1,14 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { TransactionDTO } from "../dto/transaction.dto";
 import { TransactionRepository } from "../repository/transaction.repository";
-import { UserRepository } from "../../user/repository/user.repository";
 import { TicketRepository } from "../../ticket/repository/ticket.repository";
 
 @Injectable()
 export class TransactionService {
   constructor(
     private readonly transactionRepository: TransactionRepository,
-    private readonly userRepository: UserRepository,
     private readonly ticketRepository: TicketRepository
   ) {}
 
@@ -35,7 +33,21 @@ export class TransactionService {
     return this.transactionRepository.getById(transactionId);
   }
 
-  async updateTransaction(transactionId: number, updatedTransaction: Partial<TransactionDTO>): Promise<TransactionDTO> {
+  async updateTransaction(
+    transactionId: number,
+    updatedTransaction: Partial<TransactionDTO>
+  ): Promise<TransactionDTO> {
+    if (updatedTransaction.status === "approved") {
+      await this.ticketRepository.updateStatus(
+        updatedTransaction.ticketId,
+        "sold"
+      );
+    }
+
     return this.transactionRepository.update(transactionId, updatedTransaction);
+  }
+
+  async deleteAllTransactions() {
+    await this.transactionRepository.deleteAll();
   }
 }

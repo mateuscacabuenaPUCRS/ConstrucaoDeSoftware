@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 
 import { UserEntity } from "../../user/entity/user.entity";
 import { EventEntity } from "../../event/entity/event.entity";
+import { TicketEntity } from "../../ticket/entity/ticket.entity";
 
 @Entity("tenant")
 export class TenantEntity {
@@ -28,4 +29,7 @@ export class TenantEntity {
 
   @OneToMany(() => EventEntity, (event) => event.tenant)
   events: EventEntity[];
+
+  @OneToMany(() => TicketEntity, (event) => event.tenant)
+  tickets: TicketEntity[];
 }

@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from "@nestjs/common";
 import { TicketDTO } from "../dto/ticket.dto";
 import { TicketService } from "../service/ticket.service";
 import { CreateTicketDTO } from "../dto/create-ticket.dto";
@@ -37,5 +45,15 @@ export class TicketController {
   @Delete(":id")
   async deleteTicket(@Param("id") id: number): Promise<TicketDTO> {
     return this.ticketService.deleteTicket(id);
+  }
+
+  @Delete()
+  async deleteAllTickets() {
+    try {
+      await this.ticketService.deleteAllTickets();
+      return "All tickets deleted successfully";
+    } catch (error) {
+      throw new Error("Failed to delete all tickets");
+    }
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { TransactionEntity } from "../entity/transaction.entity";
-import { DeepPartial, Repository } from "typeorm";
+import { Repository } from "typeorm";
 import { CreateTransactionDTO } from "../dto/create-transaction.dto";
 import { TransactionDTO } from "../dto/transaction.dto";
 
@@ -32,10 +32,15 @@ export class TransactionRepository {
     };
   }
 
-  async add(createTransactionDTO: CreateTransactionDTO): Promise<TransactionDTO> {
+  async add(
+    createTransactionDTO: CreateTransactionDTO
+  ): Promise<TransactionDTO> {
     const transaction = this.transactionRepository.create(createTransactionDTO);
     await this.transactionRepository.save(transaction);
-    return this.toTransactionDTO({ ...transaction, tenantId: createTransactionDTO.tenantId });
+    return this.toTransactionDTO({
+      ...transaction,
+      tenantId: createTransactionDTO.tenantId,
+    });
   }
 
   async getAll(): Promise<TransactionDTO[]> {
@@ -50,10 +55,21 @@ export class TransactionRepository {
     return this.toTransactionDTO(transaction);
   }
 
-  async update(transactionId: number, updatedTransaction: Partial<TransactionDTO>): Promise<TransactionDTO> {
-    const transaction = await this.transactionRepository.findOne({ where: { id: transactionId }});
-    this.transactionRepository.merge(transaction, updatedTransaction);
+  async update(
+    transactionId: number,
+    updatedTransaction: Partial<TransactionDTO>
+  ): Promise<TransactionDTO> {
+    const transaction = await this.transactionRepository.findOne({
+      where: { id: transactionId },
+    });
+
+    await this.transactionRepository.merge(transaction, updatedTransaction);
     await this.transactionRepository.save(transaction);
+
     return this.toTransactionDTO(transaction);
+  }
+
+  async deleteAll() {
+    await this.transactionRepository.delete({});
   }
 }

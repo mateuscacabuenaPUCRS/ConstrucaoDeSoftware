@@ -31,5 +31,5 @@ export class TicketDTO {
     description: "The tickets status",
     default: "available",
   })
-  status: string; // TODO: enum
+  status: string; // TODO: enum (available, sold, used,)
 }

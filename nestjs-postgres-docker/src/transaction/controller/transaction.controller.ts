@@ -7,6 +7,7 @@ import {
   Param,
   Get,
   Patch,
+  Delete,
 } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { TransactionDTO } from "../dto/transaction.dto";
@@ -46,55 +47,103 @@ export class TransactionController {
     try {
       return await this.transactionService.getTransactions();
     } catch (error) {
-      throw new HttpException('Failed to get transactions', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        "Failed to get transactions",
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
     }
   }
 
   @Get(":transactionId")
-  async getTransaction(@Param("transactionId") transactionId: number): Promise<TransactionDTO> {
+  async getTransaction(
+    @Param("transactionId") transactionId: number
+  ): Promise<TransactionDTO> {
     try {
-      const transaction = await this.transactionService.getTransaction(transactionId);
+      const transaction = await this.transactionService.getTransaction(
+        transactionId
+      );
       if (!transaction) {
-        throw new HttpException('Transaction not found', HttpStatus.NOT_FOUND);
+        throw new HttpException("Transaction not found", HttpStatus.NOT_FOUND);
       }
       return transaction;
     } catch (error) {
       if (error.status === HttpStatus.NOT_FOUND) {
         throw error;
       }
-      throw new HttpException('Failed to get transaction', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        "Failed to get transaction",
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
     }
   }
 
   @Patch(":transactionId/validate")
-  async validateTransaction(@Param("transactionId") transactionId: number): Promise<TransactionDTO> {
+  async validateTransaction(
+    @Param("transactionId") transactionId: number
+  ): Promise<TransactionDTO> {
     try {
-      const transaction = await this.transactionService.getTransaction(transactionId);
+      const transaction = await this.transactionService.getTransaction(
+        transactionId
+      );
       if (!transaction) {
-        throw new HttpException('Transaction not found', HttpStatus.NOT_FOUND);
+        throw new HttpException("Transaction not found", HttpStatus.NOT_FOUND);
       }
-      return await this.transactionService.updateTransaction(transactionId, { status: 'approved' })
+      return await this.transactionService.updateTransaction(transactionId, {
+        status: "approved",
+      });
     } catch (error) {
-      if (error.status === HttpStatus.NOT_FOUND || error.status === HttpStatus.BAD_REQUEST) {
+      if (
+        error.status === HttpStatus.NOT_FOUND ||
+        error.status === HttpStatus.BAD_REQUEST
+      ) {
         throw error;
       }
-      throw new HttpException('Failed to update transaction', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        "Failed to update transaction",
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
     }
   }
 
   @Patch(":transactionId/cancel")
-  async cancelTransaction(@Param("transactionId") transactionId: number): Promise<TransactionDTO> {
+  async cancelTransaction(
+    @Param("transactionId") transactionId: number
+  ): Promise<TransactionDTO> {
     try {
-      const transaction = await this.transactionService.getTransaction(transactionId);
+      const transaction = await this.transactionService.getTransaction(
+        transactionId
+      );
       if (!transaction) {
-        throw new HttpException('Transaction not found', HttpStatus.NOT_FOUND);
+        throw new HttpException("Transaction not found", HttpStatus.NOT_FOUND);
       }
-      return await this.transactionService.updateTransaction(transactionId, { status: 'canceled' })
+      return await this.transactionService.updateTransaction(transactionId, {
+        status: "canceled",
+      });
     } catch (error) {
-      if (error.status === HttpStatus.NOT_FOUND || error.status === HttpStatus.BAD_REQUEST) {
+      if (
+        error.status === HttpStatus.NOT_FOUND ||
+        error.status === HttpStatus.BAD_REQUEST
+      ) {
         throw error;
       }
-      throw new HttpException('Failed to update transaction', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        "Failed to update transaction",
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Delete()
+  async deleteAllTransactions() {
+    try {
+      await this.transactionService.deleteAllTransactions();
+
+      return "All transactions deleted";
+    } catch (error) {
+      throw new HttpException(
+        "Failed to delete transactions",
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
     }
   }
 }

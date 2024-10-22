@@ -7,6 +7,7 @@ import { UserEntity } from "src/user/entity/user.entity";
 import { TransactionEntity } from "src/transaction/entity/transaction.entity";
 import { TicketController } from "./controller/ticket.controller";
 import { TicketService } from "./service/ticket.service";
+import { TenantEntity } from "src/tenant/entity/tenant.entity";
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { TicketService } from "./service/ticket.service";
       EventEntity,
       UserEntity,
       TransactionEntity,
-    ]), // Registra a entidade no módulo
+      TenantEntity,
+    ]),
   ],
   controllers: [TicketController],
   providers: [TicketService, TicketRepository],

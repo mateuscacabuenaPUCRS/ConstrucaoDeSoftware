@@ -25,4 +25,12 @@ export class TicketService {
   async deleteTicket(id: number) {
     return this.ticketRepository.delete(id);
   }
+
+  async deleteAllTickets() {
+    return this.ticketRepository.deleteAll();
+  }
+
+  async updateTicketStatus(id: number, status: string) {
+    return this.ticketRepository.updateStatus(id, status);
+  }
 }
