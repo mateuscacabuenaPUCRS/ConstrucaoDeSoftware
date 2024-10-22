@@ -84,16 +84,13 @@ export class UserController {
 
   @Patch(":id/receiveNotifications")
   async toggleNotifications(@Param("id") id: number): Promise<UserDTO> {
-    console.log(id);
     try {
       const user = await this.userService.getUserById(id);
-      console.log(user);
       if (!user) {
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
       }
       return await this.userService.toggleNotifications(id);
     } catch (error) {
-      console.log(error);
       if (error.status === HttpStatus.NOT_FOUND) {
         throw error;
       }
