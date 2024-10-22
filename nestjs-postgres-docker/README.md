@@ -1,10 +1,18 @@
 <h2>Table of Contents</h2>
 
 - [Description](#description)
-- [Tooling and Dependencies](#tooling-and-dependencies)
-  - [Docker](#docker)
-  - [Terraform](#terraform)
-  - [AWS CLI](#aws-cli)
+  - [Entities](#entities)
+    - [Database Diagram](#database-diagram)
+    - [Tenant](#tenant)
+    - [User](#user)
+    - [Event](#event)
+    - [Ticket](#ticket)
+    - [Transaction](#transaction)
+    - [Evaluation](#evaluation)
+- [Technical Specifications](#technical-specifications)
+  - [More About Docker](#more-about-docker)
+  - [More About Terraform](#more-about-terraform)
+  - [More About AWS CLI](#more-about-aws-cli)
 - [How to Run](#how-to-run)
 - [Cheat Sheet](#cheat-sheet)
   - [Docker Actions](#docker-actions)
@@ -14,15 +22,48 @@
 - [Authors](#authors)
 
 ## Description
-<!-- TODO: Add Business Rules and About Description -->
 
-## Tooling and Dependencies
+This project is a simple API that describes an event-oriented ticketing system. It is a simple application that allows users to create events and tickets for those events, as well as buy tickets for events created by other users, provide feedback on the sellers, and view the feedback provided by other users, among other features.
 
-- [Docker](#docker)
-- [Terraform](#terraform)
-- [AWS CLI](#aws-cli)
+For more specific business rules and project description, please refer to the [full document](./docs/UseCases.md).
 
-### [Docker](https://www.docker.com/)
+### Entities
+
+Let's talk about the main entities of the application:
+
+#### Database Diagram
+
+![Database Entities Diagram](./docs/Construção%20de%20Software%20-%20T1.drawio.png)
+
+#### Tenant
+
+The tenant represents a logical grouping of users, events, tickets and transactions. It is used to separate the data of different users, so that each user can only see and interact with their own data. There are three types of tenants: `Admin`, `Seller` and `Buyer`.
+
+#### User
+
+The user is one of the central components of the application, it is intrinsically linked to the tenant, as it must always be associated with one. This entity represents the users of the application, who can be `Administrators`, `Sellers` or `Buyers`. The user can create events, tickets and transactions, as well as provide feedback on other users, depending on their role.
+
+#### Event
+
+The event is an entity that represents a gathering of people for a specific purpose. It is created by an administrator (tenant) and can have a title, description, location and a list of tickets associated with it. The event can be public or private, and only the users who have the event's access code can buy tickets for it.
+
+#### Ticket
+
+The ticket is an entity that represents the right to attend an event. It is created by a seller (tenant) and has a price, a verification code and a status. The ticket can be bought by a buyer (tenant) and can be used to attend the event. The ticket can be in one of the following statuses: `Available`, `Sold`, `Used` or `Refunded`.
+
+#### Transaction
+
+The transaction is an entity that represents the purchase of a ticket by a buyer. It is created by the buyer and has a status, a timestamp and a reference to the ticket that was bought. The transaction can be in one of the following statuses: `Pending`, `Completed` or `Refunded`. The transaction is used to verify the validity of the ticket and to provide feedback on the seller.
+
+#### Evaluation
+
+The evaluation is an entity that represents the feedback provided by a user about another user. It is created by the buyer and has a rating and a comment. The evaluation is used to provide feedback on the seller and can be used to help other buyers make informed decisions.
+
+## Technical Specifications
+
+This project was developed using [NestJS](https://nestjs.com/) with [TypeScript](https://www.typescriptlang.org/). It uses a PostgreSQL database managed by [TypeORM](https://typeorm.io/) to store the data and is deployed on [AWS](#aws-cli) using [Docker](#docker) containers and [Terraform](#terraform) to create the necessary resources.
+
+### More About [Docker](https://www.docker.com/)
 
 Docker is used to create containers for the application and the database. It is used to create a development environment that is as close as possible to the production environment.
 It is highly recommended to use Docker to run the application.
@@ -32,7 +73,7 @@ We have a [`Dockerfile`](Dockerfile) that contains the configuration for the app
 
 For some useful Docker commands, [click here](#docker-actions).
 
-### [Terraform](https://www.terraform.io/)
+### More About [Terraform](https://www.terraform.io/)
 
 Terraform is used to create the infrastructure on AWS. It creates the necessary resources for the application to run on the cloud.
 We are using Terraform to create a simple ec2 instance with a security group and a key pair, which can be used to login into the instance.
@@ -41,7 +82,7 @@ We have a `main.tf` file that contains the configuration for the resources that 
 
 For some useful Terraform commands, [click here](#terraform-actions).
 
-### [AWS CLI](https://aws.amazon.com/cli/)
+### More About [AWS CLI](https://aws.amazon.com/cli/)
 
 The AWS CLI is used to interact with AWS services, it can be used for finer control over the resources created by Terraform, altough it is not necessary. It is being used to upload the `docker-compose` file to the s3 bucket.
 
@@ -55,6 +96,8 @@ $ docker compose up
 ```
 
 That's it! The application should be running on `http://localhost:3000`.
+
+You can access the API documentation built with [Swagger](https://swagger.io/) on `http://localhost:3000/docs`.
 
 Now, assuming that you have made changes to the application and want to publish them to the cloud, here's a step-by-step guide on how to do it:
 
