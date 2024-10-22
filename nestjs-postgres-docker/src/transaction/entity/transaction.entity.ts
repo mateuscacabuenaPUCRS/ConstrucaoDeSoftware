@@ -1,9 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne } from "typeorm";
 
-import { UserEntity } from "../../user/entity/user.entity";
-
+import { EvaluationEntity } from "../../evaluation/entity/evaluation.entity";
+import { TenantEntity } from "../../tenant/entity/tenant.entity";
 import { TicketEntity } from '../../ticket/entity/ticket.entity';
-import { TenantEntity } from "src/tenant/entity/tenant.entity";
+import { UserEntity } from "../../user/entity/user.entity";
 
 
 @Entity('transaction')
@@ -23,7 +23,7 @@ export class TransactionEntity {
     @Column({ nullable: true })
     buyerId: number;
 
-    @ManyToOne (() => UserEntity, (userEntity) => userEntity.purchases)
+    @ManyToOne(() => UserEntity, (userEntity) => userEntity.purchases)
     buyer: UserEntity;
 
     @Column()
@@ -37,4 +37,10 @@ export class TransactionEntity {
 
     @ManyToOne(() => TenantEntity, (tenantEntity) => tenantEntity.sales)
     tenant: TenantEntity;
+
+    @Column({ nullable: true })
+    evaluationId: number;
+
+    @OneToOne(() => EvaluationEntity, (evaluation) => evaluation.transaction)
+    evaluation: EvaluationEntity;
 }

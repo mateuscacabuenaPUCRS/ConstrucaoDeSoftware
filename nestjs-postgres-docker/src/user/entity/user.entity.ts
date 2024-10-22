@@ -6,10 +6,9 @@ import {
   PrimaryGeneratedColumn
 } from "typeorm";
 
+import { EvaluationEntity } from "src/evaluation/entity/evaluation.entity";
 import { TenantEntity } from "../../tenant/entity/tenant.entity";
-
 import { TicketEntity } from "../../ticket/entity/ticket.entity";
-
 import { TransactionEntity } from "../../transaction/entity/transaction.entity";
 
 @Entity("user")
@@ -40,4 +39,7 @@ export class UserEntity {
     (transactionEntity) => transactionEntity.buyer
   )
   purchases: TransactionEntity[];
+
+  @OneToMany(() => EvaluationEntity, (evaluationEntity) => evaluationEntity.seller)
+  evaluations: EvaluationEntity[];
 }

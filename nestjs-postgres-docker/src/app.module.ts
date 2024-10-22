@@ -1,5 +1,7 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { EvaluationEntity } from "./evaluation/entity/evaluation.entity";
+import { EvaluationModule } from "./evaluation/evaluation.module";
 import { EventEntity } from "./event/entity/event.entity";
 import { EventModule } from "./event/event.module";
 import { TenantEntity } from "./tenant/entity/tenant.entity";
@@ -21,26 +23,29 @@ import { UserModule } from "./user/user.module";
       password: "postgres",
       database: "test_db",
       entities: [
-        UserEntity,
+        EvaluationEntity,
         EventEntity,
+        TenantEntity,
         TicketEntity,
         TransactionEntity,
-        TenantEntity,
+        UserEntity,
       ],
       synchronize: true, // Sincroniza as entidades com o banco de dados automaticamente
     }),
     TypeOrmModule.forFeature([
-      UserEntity,
+      EvaluationEntity,
       EventEntity,
+      TenantEntity,
       TicketEntity,
       TransactionEntity,
-      TenantEntity,
+      UserEntity,
     ]), // Importa as entidades para serem usadas nos módulos
-    UserModule,
+    EvaluationModule,
     EventModule,
     TenantModule,
     TicketModule,
     TransactionModule,
+    UserModule,
   ],
 })
 export class AppModule {}
