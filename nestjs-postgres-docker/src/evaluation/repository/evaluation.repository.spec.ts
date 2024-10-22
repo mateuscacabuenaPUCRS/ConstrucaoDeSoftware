@@ -1,11 +1,11 @@
-import { Repository } from "typeorm";
 import { Test, TestingModule } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
-import { SubmitEvaluationDTO } from "../dto/submit-evaluation.dto";
-import { EvaluationRepository } from "./evaluation.repository";
-import { EvaluationEntity } from "../entity/evaluation.entity";
-import { UserEntity } from "../../user/entity/user.entity";
+import { Repository } from "typeorm";
 import { TransactionEntity } from "../../transaction/entity/transaction.entity";
+import { UserEntity } from "../../user/entity/user.entity";
+import { SubmitEvaluationDTO } from "../dto/submit-evaluation.dto";
+import { EvaluationEntity } from "../entity/evaluation.entity";
+import { EvaluationRepository } from "./evaluation.repository";
 
 describe("EvaluationRepository", () => {
   let evaluationRepository: EvaluationRepository;
@@ -70,17 +70,16 @@ describe("EvaluationRepository", () => {
 
       const sellerId = 1;
       const result = await evaluationRepository.getAll(sellerId);
+      const evaluationEntitiesDTO = evaluationEntities.map(({ id, rating, comment, createdAt, transactionId, sellerId }) => ({
+        id,
+        rating,
+        comment,
+        createdAt,
+        transactionId,
+        sellerId,
+      }));
       expect(result).toEqual(
-        evaluationEntities
-          .filter((evaluation) => evaluation.sellerId === sellerId)
-          .map((evaluation) => ({
-            id: evaluation.id,
-            rating: evaluation.rating,
-            comment: evaluation.comment,
-            createdAt: evaluation.createdAt,
-            transactionId: evaluation.transactionId,
-            sellerId: evaluation.sellerId,
-          }))
+        evaluationEntitiesDTO
       );
     });
   });

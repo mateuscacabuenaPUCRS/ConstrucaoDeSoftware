@@ -1,12 +1,15 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { TicketEntity } from "../entity/ticket.entity";
-import { TicketDTO } from "../dto/ticket.dto";
 import { CreateTicketDTO } from "../dto/create-ticket.dto";
+import { TicketDTO } from "../dto/ticket.dto";
+import { TicketEntity } from "../entity/ticket.entity";
 
 @Injectable()
 export class TicketRepository {
+  updateTicketAvailability(ticketIds: number[]) {
+    throw new Error("Method not implemented.");
+  }
   constructor(
     @InjectRepository(TicketEntity)
     private readonly ticketRepository: Repository<TicketEntity>

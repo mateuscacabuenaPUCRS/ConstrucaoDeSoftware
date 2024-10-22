@@ -1,9 +1,9 @@
 import { NestFactory } from "@nestjs/core";
-import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { DataSource } from "typeorm";
 import { AppModule } from "./app.module";
-import { truncateAllTables } from './database/clear'
-import { seedDatabase } from './database/seed'
+import { truncateAllTables } from './database/clear';
+import { seedDatabase } from './database/seed';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -12,7 +12,7 @@ async function bootstrap() {
   const dataSource = app.get(DataSource);
 
   // // Truncate the database
-  // await truncateAllTables(dataSource);
+   await truncateAllTables(dataSource);
 
   // Seed the database
   await seedDatabase(dataSource);

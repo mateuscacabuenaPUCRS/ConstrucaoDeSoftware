@@ -1,78 +1,102 @@
-// import { HttpException, HttpStatus } from "@nestjs/common";
-// import { Test, TestingModule } from "@nestjs/testing";
-// import { EvaluationDTO } from "../dto/event.dto";
-// import { EvaluationService } from "../service/event.service";
-// import { EvaluationController } from "./evaluation.controller";
-// import { SubmitEvaluationDTO } from "../dto/create-event.dto";
+import { HttpException } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+import { EvaluationDTO } from '../dto/evaluation.dto';
+import { SubmitEvaluationDTO } from '../dto/submit-evaluation.dto';
+import { EvaluationService } from '../service/evaluation.service';
+import { EvaluationController } from './evaluation.controller';
 
-// describe("EvaluationController", () => {
-//   let controller: EvaluationController;
-//   let service: EvaluationService;
+describe('EvaluationController', () => {
+  let controller: EvaluationController;
+  let service: EvaluationService;
 
-//   const mockEvaluationService = {
-//     getAll: jest.fn(),
-//     submitEvaluation: jest.fn(),
-//   };
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [EvaluationController],
+      providers: [
+        {
+          provide: EvaluationService,
+          useValue: {
+            getAll: jest.fn(),
+            submitEvaluation: jest.fn(),
+          },
+        },
+      ],
+    }).compile();
 
-//   beforeEach(async () => {
-//     const module: TestingModule = await Test.createTestingModule({
-//       controllers: [EvaluationController],
-//       providers: [
-//         {
-//           provide: EvaluationService,
-//           useValue: mockEvaluationService,
-//         },
-//       ],
-//     }).compile();
+    controller = module.get<EvaluationController>(EvaluationController);
+    service = module.get<EvaluationService>(EvaluationService);
+  });
 
-//     controller = module.get<EvaluationController>(EvaluationController);
-//     service = module.get<EvaluationService>(EvaluationService);
-//   });
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
+  });
 
-//   it("should be defined", () => {
-//     expect(controller).toBeDefined();
-//   });
+  describe('getAll', () => {
+    it('should return an array of evaluations', async () => {
+      const result: EvaluationDTO[] = [
+        {
+          id: 1,
+          rating: 5,
+          comment: 'Great seller!',
+          transactionId: 1,
+          sellerId: 1,
+          createdAt: new Date(),
+        },
+      ];
+      jest.spyOn(service, 'getAll').mockResolvedValue(result);
 
-//   describe("getAll", () => {
-//     it("should return an array of events", async () => {
-//       const result: EvaluationDTO[] = [{ sellerId: 1 } as EvaluationDTO];
-//       mockEvaluationService.getAll.mockResolvedValue(result);
+      expect(await controller.getAll(1)).toBe(result);
+    });
 
-//       expect(await controller.getAll()).toBe(result);
-//     });
+    it('should throw an exception if service fails', async () => {
+      jest.spyOn(service, 'getAll').mockRejectedValue(new Error('Service error'));
 
-//     it("should throw an internal server error if service fails", async () => {
-//       mockEvaluationService.getAll.mockRejectedValue(new Error("Error"));
+      await expect(controller.getAll(1)).rejects.toThrow(HttpException);
+    });
+  });
 
-//       await expect(controller.getAll()).rejects.toThrow(HttpException);
-//     });
-//   });
+  describe('submitEvaluation', () => {
+    it('should return the created evaluation', async () => {
+      const submitEvaluationDTO: SubmitEvaluationDTO = {
+        rating: 5,
+        comment: 'Great seller!',
+        transactionId: 1,
+        sellerId: 1,
+      };
+      const result: EvaluationDTO = {
+        id: 1,
+        rating: 5,
+        comment: 'Great seller!',
+        transactionId: 1,
+        sellerId: 1,
+        createdAt: new Date(),
+      };
+      jest.spyOn(service, 'submitEvaluation').mockResolvedValue(result);
 
-//   describe("createEvaluation", () => {
-//     it("should create and return a new event", async () => {
-//       const createEvaluationDTO: SubmitEvaluationDTO = {
-//         name: "New Evaluation",
-//         tenantId: 0,
-//         type: "",
-//         location: "",
-//       };
-//       const result: EvaluationDTO = { id: 1, name: "New Evaluation" } as EvaluationDTO;
-//       mockEvaluationService.createEvaluation.mockResolvedValue(result);
+      expect(await controller.submitEvaluation(submitEvaluationDTO)).toBe(result);
+    });
 
-//       expect(await controller.createEvaluation(createEvaluationDTO)).toBe(result);
-//     });
+    it('should throw a BAD_REQUEST exception if transactionId or sellerId is missing', async () => {
+      const submitEvaluationDTO: SubmitEvaluationDTO = {
+        rating: 5,
+        comment: 'Great seller!',
+        transactionId: null,
+        sellerId: null,
+      };
 
-//     it("should throw a 400 error if event name is not provided", async () => {
-//       const createEvaluationDTO: SubmitEvaluationDTO = {
-//         name: "",
-//         tenantId: 0,
-//         type: "",
-//         location: "",
-//       };
+      await expect(controller.submitEvaluation(submitEvaluationDTO)).rejects.toThrow(HttpException);
+    });
 
-//       await expect(controller.createEvaluation(createEvaluationDTO)).rejects.toThrow(
-//         new HttpException("Evaluation name is required", HttpStatus.BAD_REQUEST)
-//       );
-//     });
-//   });
-// });
+    it('should throw an exception if service fails', async () => {
+      const submitEvaluationDTO: SubmitEvaluationDTO = {
+        rating: 5,
+        comment: 'Great seller!',
+        transactionId: 1,
+        sellerId: 1,
+      };
+      jest.spyOn(service, 'submitEvaluation').mockRejectedValue(new Error('Service error'));
+
+      await expect(controller.submitEvaluation(submitEvaluationDTO)).rejects.toThrow(HttpException);
+    });
+  });
+});
