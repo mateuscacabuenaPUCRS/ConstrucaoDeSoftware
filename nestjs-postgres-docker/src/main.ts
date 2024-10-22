@@ -12,7 +12,7 @@ async function bootstrap() {
   const dataSource = app.get(DataSource);
 
   // // Truncate the database
-   await truncateAllTables(dataSource);
+  // await truncateAllTables(dataSource);
 
   // Seed the database
   await seedDatabase(dataSource);
