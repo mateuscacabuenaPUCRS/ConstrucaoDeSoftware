@@ -55,7 +55,7 @@ export class UserRepository {
   async login(email: string): Promise<UserDTO> {
     const user = await this.userRepository.findOne({ where: { email } });
 
-    return this.toUserDTO(user); //Problema: quando não há user, retorna null e não consegue converter para DTO
+    return this.toUserDTO(user); // TODO: quando não há user, retorna null e não consegue converter para DTO
   }
 
   async toggleNotifications(id: number): Promise<UserDTO> {

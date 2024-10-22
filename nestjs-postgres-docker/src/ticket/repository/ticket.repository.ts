@@ -82,4 +82,12 @@ export class TicketRepository {
   async deleteAll() {
     await this.ticketRepository.delete({});
   }
+
+  async getUserTickets(userId: number): Promise<TicketDTO[]> {
+    const tickets = await this.ticketRepository.find({
+      where: { tenantId: userId },
+    });
+
+    return tickets.map(this.toTicketDTO);
+  }
 }

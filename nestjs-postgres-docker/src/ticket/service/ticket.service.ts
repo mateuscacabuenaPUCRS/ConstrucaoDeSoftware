@@ -1,10 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { CreateTicketDTO } from "../dto/create-ticket.dto";
 import { TicketRepository } from "../repository/ticket.repository";
+import { TransactionRepository } from "src/transaction/repository/transaction.repository";
 
 @Injectable()
 export class TicketService {
-  constructor(private readonly ticketRepository: TicketRepository) {}
+  constructor(private readonly ticketRepository: TicketRepository,
+    private readonly transactionRepository: TransactionRepository,
+  ) {}
 
   async getAllTickets() {
     return this.ticketRepository.getAll();
@@ -30,7 +33,9 @@ export class TicketService {
     return this.ticketRepository.deleteAll();
   }
 
-  async updateTicketStatus(id: number, status: string) {
-    return this.ticketRepository.updateStatus(id, status);
+  async refundTicket(id: number) {
+    const transaction = await this.transactionRepository.getByTicketId(id);
+    await this.transactionRepository.delete(transaction.id);
+    return this.ticketRepository.updateStatus(id, 'available');
   }
 }

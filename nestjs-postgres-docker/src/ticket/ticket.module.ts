@@ -8,6 +8,7 @@ import { TransactionEntity } from "src/transaction/entity/transaction.entity";
 import { TicketController } from "./controller/ticket.controller";
 import { TicketService } from "./service/ticket.service";
 import { TenantEntity } from "src/tenant/entity/tenant.entity";
+import { TransactionRepository } from "src/transaction/repository/transaction.repository";
 
 @Module({
   imports: [
@@ -20,6 +21,6 @@ import { TenantEntity } from "src/tenant/entity/tenant.entity";
     ]),
   ],
   controllers: [TicketController],
-  providers: [TicketService, TicketRepository],
+  providers: [TicketService, TicketRepository, TransactionRepository],
 })
 export class TicketModule {}

@@ -7,6 +7,8 @@ import { UserController } from "./controller/user.controller";
 import { UserEntity } from "./entity/user.entity";
 import { UserRepository } from "./repository/user.repository";
 import { UserService } from "./service/user.service";
+import { TicketRepository } from "src/ticket/repository/ticket.repository";
+import { TransactionRepository } from "src/transaction/repository/transaction.repository";
 
 @Module({
   imports: [
@@ -18,6 +20,11 @@ import { UserService } from "./service/user.service";
     ]), // Registra a entidade no módulo
   ],
   controllers: [UserController],
-  providers: [UserService, UserRepository],
+  providers: [
+    UserService,
+    UserRepository,
+    TicketRepository,
+    TransactionRepository,
+  ],
 })
 export class UserModule {}

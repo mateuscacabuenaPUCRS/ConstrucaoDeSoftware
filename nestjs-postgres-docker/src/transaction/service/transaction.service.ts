@@ -50,4 +50,8 @@ export class TransactionService {
   async deleteAllTransactions() {
     await this.transactionRepository.deleteAll();
   }
+
+  async deleteTransaction(transactionId: number) {
+    return this.transactionRepository.delete(transactionId);
+  }
 }

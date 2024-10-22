@@ -3,6 +3,7 @@ import { ApiTags } from "@nestjs/swagger";
 import { CreateUserDTO } from "../dto/create-user.dto";
 import { UserDTO } from "../dto/user.dto";
 import { UserService } from "../service/user.service";
+import { TicketDTO } from "src/ticket/dto/ticket.dto";
 
 @ApiTags("User")
 @Controller("user")
@@ -97,6 +98,23 @@ export class UserController {
         throw error;
       }
       throw new HttpException('Failed to toggle notifications', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @Get(":id/tickets")
+  async getPurchasedTickets(@Param("id") id: number): Promise<TicketDTO[]> {
+    try {
+      const user = await this.userService.getUserById(id);
+      if (!user) {
+        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      }
+
+      return await this.userService.getPurchasedTickets(id);
+    } catch (error) {
+      if (error.status === HttpStatus.NOT_FOUND) {
+        throw error;
+      }
+      throw new HttpException('Failed to get purchased tickets', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

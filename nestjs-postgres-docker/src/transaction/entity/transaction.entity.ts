@@ -3,6 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, OneToMany 
 import { UserEntity } from "../../user/entity/user.entity";
 
 import { TicketEntity } from '../../ticket/entity/ticket.entity';
+import { TenantEntity } from "src/tenant/entity/tenant.entity";
 
 
 @Entity('transaction')
@@ -30,4 +31,10 @@ export class TransactionEntity {
     
     @OneToOne(() => TicketEntity, (ticketEntity) => ticketEntity.transaction)
     ticket: TicketEntity;
+
+    @Column()
+    tenantId: number;
+
+    @ManyToOne(() => TenantEntity, (tenantEntity) => tenantEntity.sales)
+    tenant: TenantEntity;
 }

@@ -8,10 +8,11 @@ import { UserRepository } from "src/user/repository/user.repository";
 import { TicketRepository } from "src/ticket/repository/ticket.repository";
 import { UserEntity } from "src/user/entity/user.entity";
 import { TicketEntity } from "src/ticket/entity/ticket.entity";
+import { TenantEntity } from "src/tenant/entity/tenant.entity";
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([TransactionEntity, UserEntity, TicketEntity]),
+    TypeOrmModule.forFeature([TransactionEntity, UserEntity, TicketEntity, TenantEntity]),
   ],
   controllers: [TransactionController],
   providers: [

@@ -20,7 +20,7 @@ export class TransactionRepository {
     buyerId,
     ticketId,
     tenantId,
-  }: TransactionEntity & { tenantId?: number }): TransactionDTO {
+  }: TransactionEntity): TransactionDTO {
     return {
       id,
       salesPrice,
@@ -71,5 +71,27 @@ export class TransactionRepository {
 
   async deleteAll() {
     await this.transactionRepository.delete({});
+  }
+
+  async delete(transactionId: number): Promise<TransactionDTO> {
+    const transaction = await this.transactionRepository.findOne({
+      where: { id: transactionId },
+    });
+    await this.transactionRepository.remove(transaction);
+    return this.toTransactionDTO(transaction);
+  }
+
+  async getBuyerTransactions(buyerId: number): Promise<TransactionDTO[]> {
+    const transactions = await this.transactionRepository.find({
+      where: { buyerId },
+    });
+    return transactions.map(this.toTransactionDTO);
+  }
+
+  async getByTicketId(ticketId: number): Promise<TransactionDTO> {
+    const transaction = await this.transactionRepository.findOne({
+      where: { ticketId },
+    });
+    return this.toTransactionDTO(transaction);
   }
 }

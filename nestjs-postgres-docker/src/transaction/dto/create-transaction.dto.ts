@@ -1,5 +1,4 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { UserDTO } from "src/user/dto/user.dto";
 
 export class CreateTransactionDTO {
   @ApiProperty({

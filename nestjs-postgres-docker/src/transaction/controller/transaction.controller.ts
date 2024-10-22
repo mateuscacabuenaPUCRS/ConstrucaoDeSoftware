@@ -146,4 +146,27 @@ export class TransactionController {
       );
     }
   }
+
+  @Delete(":transactionId")
+  async deleteTransaction(
+    @Param("transactionId") transactionId: number
+  ): Promise<TransactionDTO> {
+    try {
+      const transaction = await this.transactionService.getTransaction(
+        transactionId
+      );
+      if (!transaction) {
+        throw new HttpException("Transaction not found", HttpStatus.NOT_FOUND);
+      }
+      return await this.transactionService.deleteTransaction(transactionId);
+    } catch (error) {
+      if (error.status === HttpStatus.NOT_FOUND) {
+        throw error;
+      }
+      throw new HttpException(
+        "Failed to delete transaction",
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
 }
