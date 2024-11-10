@@ -1,6 +1,6 @@
 
 # Usar a imagem oficial do Node.js
-FROM node:16
+FROM node:18
 
 # Definir diretório de trabalho
 WORKDIR /app
@@ -18,7 +18,7 @@ COPY . .
 RUN npm run build
 
 # Expor a porta da aplicação
-EXPOSE 3000
+EXPOSE 8000
 
 # Rodar o comando para iniciar o aplicativo
 CMD ["npm", "run", "start:prod"]

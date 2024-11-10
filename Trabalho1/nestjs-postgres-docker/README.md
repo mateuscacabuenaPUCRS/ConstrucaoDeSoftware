@@ -95,9 +95,9 @@ To start the application with Docker, simply run the following command:
 $ docker compose up
 ```
 
-That's it! The application should be running on `http://localhost:3000`.
+That's it! The application should be running on `http://localhost:8000`.
 
-You can access the API documentation built with [Swagger](https://swagger.io/) on `http://localhost:3000/docs`.
+You can access the API documentation built with [Swagger](https://swagger.io/) on `http://localhost:8000/docs`.
 
 Now, assuming that you have made changes to the application and want to publish them to the cloud, here's a step-by-step guide on how to do it:
 

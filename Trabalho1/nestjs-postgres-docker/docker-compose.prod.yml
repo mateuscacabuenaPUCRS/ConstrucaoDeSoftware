@@ -3,7 +3,7 @@ services:
     image: felipefreitassilva/csw24-grupob-tickets:latest
     restart: always
     ports:
-      - '3000:3000'
+      - '8000:8000'
     environment:
       - DATABASE_HOST=database
       - DATABASE_PORT=5432
