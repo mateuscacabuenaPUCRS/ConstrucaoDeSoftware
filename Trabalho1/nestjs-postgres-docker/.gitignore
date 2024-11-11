@@ -1,10 +1,13 @@
+# Output directory
 /dist
 /node_modules
 
+# AWS Credentials and Key Pairs
 .aws/credentials
-
-# AWS Key Pairs
 *.pem
+
+# Local .env files
+.env
 
 # Local terraform installation
 terraform
