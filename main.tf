@@ -1,3 +1,13 @@
+terraform {
+  backend "remote" {
+    organization = "CWS24-GrupoB"
+
+    workspaces {
+      name = "csw24-grupob-workspace"
+    }
+  }
+}
+
 provider "aws" {
     region = "us-east-1"
     shared_credentials_files = [".aws/credentials"]
