@@ -1,6 +1,6 @@
 terraform {
   backend "remote" {
-    organization = "CWS24-GrupoB"
+    organization = "CSW24-GrupoB"
 
     workspaces {
       name = "csw24-grupob-workspace"
