@@ -1,8 +1,5 @@
 service: nestjs-serverless-app
 
-plugins:
-  - serverless-offline
-
 provider:
   name: aws
   runtime: nodejs18.x
@@ -11,11 +8,8 @@ provider:
 
 functions:
   main:
-    handler: dist/main.handler
+    handler: src/main-lambda.handler
     events:
       - http:
-          method: ANY
           path: /
-      - http:
-          method: ANY
-          path: '{proxy+}'
+          method: get
