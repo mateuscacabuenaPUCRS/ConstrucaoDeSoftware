@@ -17,6 +17,7 @@
 - [Cheat Sheet](#cheat-sheet)
   - [Docker Actions](#docker-actions)
   - [Terraform Actions](#terraform-actions)
+  - [SAM Actions](#sam-actions)
   - [Run Tests](#run-tests)
   - [Custom Actions](#custom-actions)
 - [Authors](#authors)
@@ -173,6 +174,19 @@ $ terraform apply
 
 # "Rollback" Changes
 $ terraform destroy
+```
+
+### SAM Actions
+
+```bash
+# Build the application
+$ sam build
+
+# Deploy the application
+$ sam deploy --guided
+
+# Remove the application
+$ sam delete
 ```
 
 ### Run Tests
