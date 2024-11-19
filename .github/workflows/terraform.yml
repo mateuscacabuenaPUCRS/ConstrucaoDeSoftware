@@ -40,19 +40,19 @@ jobs:
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-    - name: Debug AWS Credentials
-      run: |
-        echo "AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID"
-        echo "AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY"
-        echo "AWS_SESSION_TOKEN: $AWS_SESSION_TOKEN"
-        aws sts get-caller-identity
+    - name: Debug Variables - AWS_ACCESS_KEY_ID
+      run: echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
+    - name: Debug Variables - AWS_SECRET_ACCESS_KEY
+      run: echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+    - name: Debug Variables - AWS_SESSION_TOKEN
+      run: echo "AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN"
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+        AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ vars.AWS_SECRET_ACCESS_KEY }}
+        AWS_SESSION_TOKEN: ${{ vars.AWS_SESSION_TOKEN }}
       run: terraform init
 
     # Checks that all Terraform configuration files adhere to a canonical format
@@ -62,9 +62,9 @@ jobs:
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+        AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ vars.AWS_SECRET_ACCESS_KEY }}
+        AWS_SESSION_TOKEN: ${{ vars.AWS_SESSION_TOKEN }}
       run: terraform plan -input=false
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
@@ -72,7 +72,7 @@ jobs:
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+        AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ vars.AWS_SECRET_ACCESS_KEY }}
+        AWS_SESSION_TOKEN: ${{ vars.AWS_SESSION_TOKEN }}
       run: terraform apply -auto-approve -input=false
