@@ -1,9 +1,9 @@
 {
-  "name": "nestjs-postgres-docker",
+  "name": "csw24-grupob",
   "version": "1.0.0",
-  "description": "hello world sample for NodeJS",
-  "main": "app.js",
-  "repository": "https://github.com/awslabs/aws-sam-cli/tree/develop/samcli/local/init/templates/cookiecutter-aws-sam-hello-nodejs",
+  "description": "Trabalho da disciplina de Construção de Software da PUCRS - 2024/2",
+  "main": "src/main-lambda.js",
+  "repository": "https://github.com/mateuscacabuenaPUCRS/ConstrucaoDeSoftware",
   "scripts": {
     "start": "nest start",
     "start:dev": "nest start --watch",
