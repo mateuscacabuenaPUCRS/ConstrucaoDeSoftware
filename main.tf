@@ -10,7 +10,7 @@ terraform {
 
 provider "aws" {
   region = "us-east-1"
-  # shared_credentials_files  = [".aws/credentials"]
+  shared_credentials_files  = [".aws/credentials"]
 }
 
 # Commenting since we don't have permission to create bucket with ACL enabled (except via the console for some unknown reason)
