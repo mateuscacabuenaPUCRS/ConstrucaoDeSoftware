@@ -20,7 +20,7 @@ fi
 echo "Contents of $AWS_CREDENTIALS_FILE:"
 cat "$AWS_CREDENTIALS_FILE"
 
-# Extract AWS Access Key ID and Secret Access Key
+# Extract AWS Access Key ID, Secret Access Key, and Session Token
 AWS_ACCESS_KEY_ID=$(grep -A 3 '\[default\]' "$AWS_CREDENTIALS_FILE" | grep 'aws_access_key_id' | awk -F '=' '{print $2}' | xargs)
 AWS_SECRET_ACCESS_KEY=$(grep -A 3 '\[default\]' "$AWS_CREDENTIALS_FILE" | grep 'aws_secret_access_key' | awk -F '=' '{print $2}' | xargs)
 AWS_SESSION_TOKEN=$(grep -A 3 '\[default\]' "$AWS_CREDENTIALS_FILE" | grep 'aws_session_token' | awk -F '=' '{print $2}' | xargs)
