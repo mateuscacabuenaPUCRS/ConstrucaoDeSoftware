@@ -13,34 +13,6 @@ provider "aws" {
   shared_credentials_files = [".aws/credentials"]
 }
 
-# Commenting since we don't have permission to create bucket with ACL enabled (except via the console for some unknown reason)
-
-# resource "aws_s3_bucket" "csw24_docker_compose_bucket" {
-#   bucket = "csw24-ticket-docker-compose-bucket"
-# }
-
-# resource "aws_s3_bucket_acl" "csw24_docker_compose_bucket_acl" {
-#   bucket = aws_s3_bucket.csw24_docker_compose_bucket.id
-#   acl    = "public-read"
-# }
-
-# resource "aws_s3_object" "csw24_docker_compose_file" {
-#   bucket = aws_s3_bucket.csw24_docker_compose_bucket.bucket
-#   key    = "docker-compose.yml"
-#   source = "${path.module}/docker-compose.yml"
-#   acl    = "public-read"
-# }
-
-resource "tls_private_key" "my_key" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
-
-resource "aws_key_pair" "my_key_pair" {
-  key_name   = "my-key"
-  public_key = tls_private_key.my_key.public_key_openssh
-}
-
 resource "aws_security_group" "csw24_ticket_ports_access" {
   name        = "csw24-ticket-ports-access"
   description = "Allows API and SSH access"
@@ -111,19 +83,4 @@ resource "aws_instance" "csw24-grupob-ticket" {
     # Start container
     sudo docker-compose up -d
   EOF
-}
-
-resource "local_file" "private_key_pem" {
-  filename        = "${path.module}/.aws/my-key.pem"
-  content         = tls_private_key.my_key.private_key_pem
-  file_permission = "0400"
-}
-
-output "private_key" {
-  value     = tls_private_key.my_key.private_key_pem
-  sensitive = true
-}
-
-output "public_key" {
-  value = tls_private_key.my_key.public_key_openssh
 }
