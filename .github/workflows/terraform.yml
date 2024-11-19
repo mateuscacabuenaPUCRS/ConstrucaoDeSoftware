@@ -40,12 +40,19 @@ jobs:
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-    - name: Debug Variables - AWS_ACCESS_KEY_ID
-      run: echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
-    - name: Debug Variables - AWS_SECRET_ACCESS_KEY
-      run: echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-    - name: Debug Variables - AWS_SESSION_TOKEN
-      run: echo "AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN"
+    # Debug the AWS environment variables
+    - name: Debug AWS Environment Variables
+      env:
+        AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ vars.AWS_SECRET_ACCESS_KEY }}
+        AWS_SESSION_TOKEN: ${{ vars.AWS_SESSION_TOKEN }}
+      run: |
+        echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
+        echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
+        echo "AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN"
+    
+    - name: Debug Environment
+      run: env
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
