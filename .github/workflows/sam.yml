@@ -31,10 +31,6 @@ jobs:
         sudo apt-get install -y python3-pip
         pip3 install aws-sam-cli
 
-    # Initialize a new or existing SAM application by creating initial files, loading any remote state, downloading modules, etc.
-    - name: SAM Init
-      run: sam init
-
     # Checks that all SAM configuration files adhere to a canonical format
     - name: SAM Validate
       run: sam validate
