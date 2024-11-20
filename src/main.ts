@@ -1,3 +1,4 @@
+import { writeFileSync } from 'fs';
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { DataSource } from "typeorm";
@@ -25,6 +26,8 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("docs", app, document);
+
+  writeFileSync('swagger.json', JSON.stringify(document, null, 2), { encoding: 'utf-8' });
 
   await app.listen(8000);
 }
