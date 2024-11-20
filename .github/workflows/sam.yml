@@ -33,7 +33,7 @@ jobs:
 
     # Checks that all SAM configuration files adhere to a canonical format
     - name: SAM Validate
-      run: sam validate
+      run: sam validate --config-file samconfig.toml
 
     # Build the SAM application
     - name: SAM Build
