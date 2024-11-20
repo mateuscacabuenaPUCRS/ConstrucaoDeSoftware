@@ -1,4 +1,3 @@
-
 # Usar a imagem oficial do Node.js
 FROM node:18
 

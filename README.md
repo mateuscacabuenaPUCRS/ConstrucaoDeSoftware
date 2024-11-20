@@ -13,6 +13,7 @@
   - [More About Docker](#more-about-docker)
   - [More About Terraform](#more-about-terraform)
   - [More About AWS CLI](#more-about-aws-cli)
+  - [More About SAM](#more-about-sam)
 - [How to Run](#how-to-run)
 - [Cheat Sheet](#cheat-sheet)
   - [Docker Actions](#docker-actions)
@@ -62,7 +63,7 @@ The evaluation is an entity that represents the feedback provided by a user abou
 
 ## Technical Specifications
 
-This project was developed using [NestJS](https://nestjs.com/) with [TypeScript](https://www.typescriptlang.org/). It uses a PostgreSQL database managed by [TypeORM](https://typeorm.io/) to store the data and is deployed on [AWS](#aws-cli) using [Docker](#docker) containers and [Terraform](#terraform) to create the necessary resources.
+This project was developed using [NestJS](https://nestjs.com/) with [TypeScript](https://www.typescriptlang.org/) and uses a PostgreSQL database managed by [TypeORM](https://typeorm.io/) to store the data. It is deployed on [AWS](#aws-cli) using [Docker](#docker) containers and [Terraform](#terraform) to create the necessary resources as well as [SAM]() for the serverless application.
 
 ### More About [Docker](https://www.docker.com/)
 
@@ -86,6 +87,10 @@ For some useful Terraform commands, [click here](#terraform-actions).
 ### More About [AWS CLI](https://aws.amazon.com/cli/)
 
 The AWS CLI is used to interact with AWS services, it can be used for finer control over the resources created by Terraform, altough it is not necessary. It is being used to upload the `docker-compose` file to the s3 bucket.
+
+### More About [SAM](https://aws.amazon.com/serverless/sam/)
+
+The AWS Serverless Application Model (SAM) is used to deploy the application as a serverless application on AWS. It is used to create the necessary resources for the application to run on the cloud. It is being used to deploy the application on AWS.
 
 ## How to Run
 
@@ -133,6 +138,22 @@ This command will show you what will be created on AWS, you can review it and th
 
 ```bash
 $ terraform apply
+```
+
+5. Build the application (SAM):
+
+This command will build the application using SAM, you should only need to run this once.
+
+```bash
+$ sam build
+```
+
+6. Deploy the application (SAM):
+
+This command will deploy the application on AWS using SAM, you will be asked to provide some information about the deployment.
+
+```bash
+$ sam deploy --guided
 ```
 
 That's it! The application should be running on the cloud now.
