@@ -31,9 +31,12 @@ jobs:
         sudo apt-get install -y python3-pip
         pip3 install aws-sam-cli
 
+    - name: Set up AWS CLI
+      run: aws configure set region us-east-1
+
     # Checks that all SAM configuration files adhere to a canonical format
     - name: SAM Validate
-      run: sam validate --config-file samconfig.toml
+      run: sam validate --config-file samconfig.toml --region us-east-1
 
     # Build the SAM application
     - name: SAM Build
