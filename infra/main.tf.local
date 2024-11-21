@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "aws" {
-  region                   = "us-east-1"
+  region = "us-east-1"
 }
 
 # Commenting since we don't have permission to create bucket with ACL enabled (except via the console for some unknown reason)
