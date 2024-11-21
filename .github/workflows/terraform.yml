@@ -30,6 +30,11 @@ jobs:
         shell: bash
         working-directory: ./infra
 
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+
     steps:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
@@ -42,25 +47,21 @@ jobs:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
     # # Debug the AWS environment variables
-    # - name: Debug AWS Environment Variables
-    #   env:
-    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    #     AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-    #   run: |
-    #     echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
-    #     echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
-    #     echo "AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN"
+    - name: Debug AWS Environment Variables
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+      run: |
+        echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
+        echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
+        echo "AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN"
     
-    # - name: Debug Environment
-    #   run: env
+    - name: Debug Environment
+      run: env
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      # env:
-      #   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #   AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
       run: terraform init
 
     # Checks that all Terraform configuration files adhere to a canonical format
@@ -69,16 +70,8 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      # env:
-      #   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #   AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
       run: terraform plan -input=false
 
       # Build or change infrastructure according to Terraform configuration files
     - name: Terraform Apply
-      # env:
-      #   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #   AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
       run: terraform apply -auto-approve -input=false
