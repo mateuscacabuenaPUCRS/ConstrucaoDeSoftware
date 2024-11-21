@@ -15,9 +15,11 @@
   - [More About AWS CLI](#more-about-aws-cli)
   - [More About SAM](#more-about-sam)
 - [How to Run](#how-to-run)
+  - [How to Deploy](#how-to-deploy)
 - [Cheat Sheet](#cheat-sheet)
   - [Docker Actions](#docker-actions)
   - [Terraform Actions](#terraform-actions)
+  - [AWS CLI Actions](#aws-cli-actions)
   - [SAM Actions](#sam-actions)
   - [Run Tests](#run-tests)
   - [Custom Actions](#custom-actions)
@@ -107,8 +109,30 @@ You can access the API documentation built with [Swagger](https://swagger.io/) o
 
 Now, assuming that you have made changes to the application and want to publish them to the cloud, here's a step-by-step guide on how to do it:
 
+### How to Deploy
+
+Before exporting the application, you should have your updated AWS credentials in the default directory for your system following the content in the [`credentials.template`](.aws/credentials.template) file. This is only necessary if you want to deploy the application on AWS (using terraform and SAM), for local development you can ignore this step.
+In order to setup the environment variables you need to have the [AWS CLI](https://aws.amazon.com/cli/) installed and configured. You can setup your credentials by running the following command:
+
+```bash
+$ aws configure
+```
+
+To verify if the credentials are correctly set, you can run the following command:
+
+```bash
+$ aws sts get-caller-identity
+```
+
 1. Update the application image on Docker Hub:
 
+For this step you should have a Docker Hub account and be logged in on the terminal, which can be done with the following command:
+
+```bash
+$ docker login
+```
+
+Remember to change the image name and tag variables in the [`update-image.sh`](scripts/update-image.sh) script to your own image name and tag.
 This is the most important step, you must update the image on Docker Hub so that the instance can download it and run the application with the latest changes.
 
 ```bash
@@ -117,6 +141,7 @@ $ scripts/update-image.sh
 
 2. (Optional) Update the `docker-compose` file on the s3 bucket:
 
+Remember to change the bucket name variable in the [`upload-compose.sh`](scripts/upload-compose.sh) script to your own bucket name.
 Run this only if you have made changes to the `docker-compose.prod.yml` file and want to update the one on the s3 bucket.
 Altough we are using a public bucket, if you update the file you must manually update the Access control list (ACL) file on the bucket to allow `Read` access to the `Object` for `Everyone (public access)`. This is necessary because the instance will download the file from the bucket.
 
@@ -124,7 +149,15 @@ Altough we are using a public bucket, if you update the file you must manually u
 $ scripts/upload-compose.sh
 ```
 
-3. Initialize the Terraform environment:
+3. Infrastructure as Code (IaC) with Terraform and SAM:
+
+First move to the `infra` directory:
+
+```bash
+$ cd infra
+``` 
+
+4. Initialize the Terraform environment:
 
 This command will download the necessary plugins to run the Terraform script, you should only need to run this once.
 
@@ -132,7 +165,15 @@ This command will download the necessary plugins to run the Terraform script, yo
 $ terraform init
 ```
 
-4. Push the changes to the cloud:
+5. Push the changes to the cloud:
+
+Since we are using a HashiCorp Vault to store the sensitive information, you should have the necessary permissions to access it. You can use the following command to login into the vault:
+
+```bash
+$ terraform login
+```
+
+Then update the [`main.tf`](infra/main.tf) file with the necessary information, such as the image name and tag, the bucket name and your organization details.
 
 This command will show you what will be created on AWS, you can review it and then confirm the changes.
 
@@ -140,15 +181,15 @@ This command will show you what will be created on AWS, you can review it and th
 $ terraform apply
 ```
 
-5. Build the application (SAM):
+6. Build the application (SAM):
 
-This command will build the application using SAM, you should only need to run this once.
+This command will build the application using SAM, you should only need to run this once. Sometimes it throws a huge error, then you should run it again.
 
 ```bash
 $ sam build
 ```
 
-6. Deploy the application (SAM):
+7. Deploy the application (SAM):
 
 This command will deploy the application on AWS using SAM, you will be asked to provide some information about the deployment.
 
@@ -158,7 +199,7 @@ $ sam deploy --guided
 
 That's it! The application should be running on the cloud now.
 
-Access your instance on the AWS console to get the public IP address and access the application.
+Access your instance (under the EC2 tab) on the AWS console to get the public IP address and access the application.
 
 To enter into the instance, you can use the following command:
 
@@ -197,6 +238,18 @@ $ terraform apply
 $ terraform destroy
 ```
 
+### AWS CLI Actions
+
+```bash
+# Configure the AWS CLI
+$ aws configure
+```
+
+```bash
+# Verify the credentials
+$ aws sts get-caller-identity
+```
+
 ### SAM Actions
 
 ```bash
@@ -217,7 +270,7 @@ Alternatively, you can run the tests inside the container (recommended).
 
 ```bash
 # unit tests
-$ npm run test
+$ npm test
 
 # test coverage
 $ npm run test:cov
