@@ -34,6 +34,10 @@ jobs:
     - name: Set up AWS CLI
       run: aws configure set region us-east-1
 
+    # Move into the infra directory
+    - name: Move into infra directory
+      run: cd infra
+
     # Checks that all SAM configuration files adhere to a canonical format
     - name: SAM Validate
       run: sam validate --config-file samconfig.toml --region us-east-1
