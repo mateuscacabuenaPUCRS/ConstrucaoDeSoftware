@@ -1,5 +1,5 @@
 # AWS Credentials and Key Pairs
-# .aws/credentials
+.aws/credentials
 *.pem
 
 # Local .env files

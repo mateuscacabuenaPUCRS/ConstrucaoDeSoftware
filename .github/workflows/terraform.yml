@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest. Also, set the working directory to the `infra` directory.
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest. Also, set the working directory to the `infra` folder.
     defaults:
       run:
         shell: bash
@@ -46,21 +46,7 @@ jobs:
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-    # # Debug the AWS environment variables
-    - name: Debug AWS Environment Variables
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-      run: |
-        echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
-        echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
-        echo "AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN"
-    
-    - name: Debug Environment
-      run: env
-
-    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    # Initialize existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
 
@@ -72,6 +58,6 @@ jobs:
     - name: Terraform Plan
       run: terraform plan -input=false
 
-      # Build or change infrastructure according to Terraform configuration files
+    # Build or change infrastructure according to Terraform configuration files
     - name: Terraform Apply
       run: terraform apply -auto-approve -input=false
