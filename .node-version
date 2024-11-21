@@ -1,0 +1,4 @@
+v20.18.1
+v18.20.5
+# fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression
+# fnm use
