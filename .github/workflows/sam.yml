@@ -14,10 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest. Also, set the working directory to the `infra` directory.
     defaults:
       run:
         shell: bash
+        working-directory: ./infra
 
     steps:
     # Checkout the repository to the GitHub Actions runner
