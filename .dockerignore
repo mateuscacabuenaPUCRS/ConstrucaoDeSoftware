@@ -3,7 +3,13 @@ scripts
 
 # Ignore .aws and .terraform directories
 .aws
+.aws-sam
 .terraform
+
+# Ignore git related directories
+.git
+.gitignore
+.github
 
 # Ignore node_modules directory
 node_modules
