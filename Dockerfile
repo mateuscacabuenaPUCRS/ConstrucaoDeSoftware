@@ -5,13 +5,13 @@ FROM node:18
 WORKDIR /app
 
 # Copiar os arquivos package*.json
-COPY ../package*.json ./
+COPY package*.json ./
 
 # Instalar dependências
 RUN npm install
 
 # Copiar o restante dos arquivos do projeto
-COPY .. .
+COPY . .
 
 # Build do projeto
 RUN npm run build
