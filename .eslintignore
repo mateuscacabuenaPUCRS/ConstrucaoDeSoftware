@@ -1,2 +1,7 @@
+.aws
+.github
+docs
+infra
+scripts
 node_modules
-.aws-sam
+dist
