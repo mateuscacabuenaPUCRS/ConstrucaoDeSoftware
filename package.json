@@ -8,7 +8,7 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:prod": "node dist/src/main.js",
-    "build": "nest build",
+    "build": "npm run compile && node esbuild.config.js",
     "test": "jest",
     "test:cov": "jest --coverage",
     "lint": "eslint '*.ts' --quiet --fix",
