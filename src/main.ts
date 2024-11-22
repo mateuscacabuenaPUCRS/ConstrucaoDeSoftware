@@ -1,6 +1,5 @@
 import { writeFileSync } from 'fs';
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import express from 'express';
 import { NestFactory } from "@nestjs/core";
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
@@ -34,9 +33,17 @@ async function bootstrap() {
 
   await app.listen(8000);
 }
-// bootstrap();
+bootstrap();
 
 export const lambdaHandler = async (event: APIGatewayProxyEvent, context: unknown = {}): Promise<APIGatewayProxyResult> => {
+  let express: any;
+  try {
+    express = require('express');  
+  } catch (e) {
+    console.error('Please run `npm install express`');
+    throw e;
+  }
+
   const server = express();
   const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
   await app.init();
