@@ -35,29 +35,29 @@ Resources:
         EntryPoints: 
         - app.ts
 
-  TicketsFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: ../
-      Handler: ./src/main.lambdaHandler
-      Runtime: nodejs18.x
-      Role: arn:aws:iam::055848354853:role/LabRole
-      Architectures:
-        - x86_64
-      Events:
-        Tickets:
-          Type: Api
-          Properties:
-            Path: /{proxy+}
-            Method: any
-    Metadata:
-      BuildMethod: esbuild
-      BuildProperties:
-        Minify: true
-        Target: "es2020"
-        Sourcemap: true
-        EntryPoints: 
-        - src/main.ts
+  # TicketsFunction:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     CodeUri: ../
+  #     Handler: ./src/main.lambdaHandler
+  #     Runtime: nodejs18.x
+  #     Role: arn:aws:iam::055848354853:role/LabRole
+  #     Architectures:
+  #       - x86_64
+  #     Events:
+  #       Tickets:
+  #         Type: Api
+  #         Properties:
+  #           Path: /{proxy+}
+  #           Method: any
+  #   Metadata:
+  #     BuildMethod: esbuild
+  #     BuildProperties:
+  #       Minify: true
+  #       Target: "es2020"
+  #       Sourcemap: true
+  #       EntryPoints: 
+  #       - src/main.ts
 
 Outputs:
   HelloWorldApi:
@@ -66,6 +66,6 @@ Outputs:
   HelloWorldFunction:
     Description: "Hello World Lambda Function ARN"
     Value: !GetAtt HelloWorldFunction.Arn
-  TicketsFunction:
-    Description: "Tickets Lambda Function ARN"
-    Value: !GetAtt TicketsFunction.Arn
+  # TicketsFunction:
+  #   Description: "Tickets Lambda Function ARN"
+  #   Value: !GetAtt TicketsFunction.Arn
