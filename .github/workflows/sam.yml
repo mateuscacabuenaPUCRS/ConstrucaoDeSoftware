@@ -51,7 +51,9 @@ jobs:
 
     # Build the SAM application
     - name: SAM Build
-      run: npm run build
+      run: |
+        npm run build
+        sam build
 
     # Deploy the SAM application
     - name: SAM Deploy
