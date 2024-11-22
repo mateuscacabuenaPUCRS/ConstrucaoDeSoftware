@@ -1,7 +1,7 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { lambdaHandler } from '../app';
 import { expect, describe, it } from '@jest/globals';
-import helloWorldEvent from '../events/hello_world.json'
+import helloWorldEvent from '../events/hello_world.json';
 
 describe('HelloWorld Lambda Function', function () {
     it('should return a successful response', async () => {
