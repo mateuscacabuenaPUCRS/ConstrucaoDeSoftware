@@ -1,4 +1,7 @@
-# Ignore custom scripts directory
+# Ignore custom directories
+coverage
+docs
+infra
 scripts
 
 # Ignore .aws and .terraform directories
