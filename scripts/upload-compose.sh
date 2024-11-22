@@ -9,6 +9,8 @@ S3_PATH="s3://${S3_BUCKET}/${DOCKER_COMPOSE_FILENAME}"
 # Ensure AWS CLI is installed
 if ! [ -x "$(command -v aws)" ]; then
   echo 'Error: aws CLI is not installed.' >&2
+  # Freeze the script to display the output
+  read -p "Press any key to continue..."
   exit 1
 fi
 

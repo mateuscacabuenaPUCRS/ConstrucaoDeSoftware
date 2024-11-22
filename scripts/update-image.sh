@@ -11,6 +11,8 @@ docker build -t $IMAGE_NAME:$TAG .
 # Check if the build was successful
 if [ $? -ne 0 ]; then
   echo "Error: Docker build failed."
+  # Freeze the script to display the output
+  read -p "Press any key to continue..."
   exit 1
 fi
 
@@ -23,6 +25,8 @@ if [ $? -eq 0 ]; then
   echo "Docker image pushed successfully: $IMAGE_NAME:$TAG"
 else
   echo "Error: Failed to push the Docker image."
+  # Freeze the script to display the output
+  read -p "Press any key to continue..."
   exit 1
 fi
 
