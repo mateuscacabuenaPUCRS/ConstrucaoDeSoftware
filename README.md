@@ -16,6 +16,8 @@
   - [More About SAM](#more-about-sam)
 - [How to Run](#how-to-run)
   - [How to Deploy](#how-to-deploy)
+    - [AWS Credentials](#aws-credentials)
+    - [Terraform Variables](#terraform-variables)
 - [Cheat Sheet](#cheat-sheet)
   - [Docker Actions](#docker-actions)
   - [Terraform Actions](#terraform-actions)
@@ -103,26 +105,86 @@ To start the application with Docker, simply run the following command:
 $ docker compose up
 ```
 
-That's it! The application should be running on `http://localhost:8000`.
+That's it! The application should be running on http://localhost:8000.
 
-You can access the API documentation built with [Swagger](https://swagger.io/) on `http://localhost:8000/docs`.
+You can access the API documentation built with [Swagger](https://swagger.io/) on http://localhost:8000/docs.
 
 Now, assuming that you have made changes to the application and want to publish them to the cloud, here's a step-by-step guide on how to do it:
 
 ### How to Deploy
+
+#### AWS Credentials
 
 Before exporting the application, you should have your updated AWS credentials in the default directory for your system following the content in the [`credentials.template`](.aws/credentials.template) file. This is only necessary if you want to deploy the application on AWS (using terraform and SAM), for local development you can ignore this step.
 In order to setup the environment variables you need to have the [AWS CLI](https://aws.amazon.com/cli/) installed and configured. You can setup your credentials by running the following command:
 
 ```bash
 $ aws configure
+# AWS Access Key ID [None]: YOUR_ACCESS_KEY
+# AWS Secret Access Key [None]: YOUR_SECRET_KEY
+# Default region name [us-east-1]: YOUR_REGION
+# Default output format [json]: YOUR_OUTPUT_FORMAT
+```
+
+If you have a `AWS_SESSION_TOKEN`, you will have to manually update the `credentials` file with the necessary information.
+On the terminal, you can run the following command to add this field:
+
+```bash
+# Linux
+$ echo "aws_session_token = YOUR_SESSION_TOKEN" >> ~/.aws/credentials
+
+# Windows (CMD)
+$ echo aws_session_token = YOUR_SESSION_TOKEN >> %UserProfile%\.aws\credentials
+
+# Windows (Powershell)
+$ Add-Content -Path $env:UserProfile\.aws\credentials -Value "aws_session_token = YOUR_SESSION_TOKEN"
 ```
 
 To verify if the credentials are correctly set, you can run the following command:
 
 ```bash
+# Check the credentials
 $ aws sts get-caller-identity
 ```
+
+#### Terraform Variables
+
+After setting up the AWS credentials, you should have the necessary values to run the Terraform script.
+Inside the `infra` directory, you will find a `aws.auto.tfvars.example` file, which contains the necessary variables for the Terraform script. You could copy this file and rename it to `aws.auto.tfvars`, then fill in the necessary information, or simply run the following command:
+
+```bash
+$ scripts/set-aws-tfvars.sh
+```
+
+Sometimes, we might also need these values as environment variables. In which case you can set them with the following command:
+
+```bash
+$ scripts/set-aws-env-variables.sh
+```
+
+To verify if the environment variables are correctly set, you can run the following commands:
+
+```bash
+# Change "TOKEN" to the name of the environment variable you want to check
+# Available variables: AWS_PROFILE, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN
+
+# Check the environment variables (Linux)
+$ echo $TOKEN
+
+# Check the environment variables (Windows - CMD)
+$ echo %TOKEN%
+
+# Check the environment variables (Windows - Powershell)
+$ echo $env:TOKEN
+```
+
+For the variables, you can simply check if the [`aws.auto.tfvars`](infra/aws.auto.tfvars) file is present and properly filled.
+
+In order to deploy the application, you should upload these variables to the HashiCorp Vault. You can do this by accessing the [Vault UI](https://app.terraform.io/app/YOUR_ORG/workspaces/YOUR-ORG-workspace/variables) and adding the necessary variables.
+
+Remember to also set these credentials on [GitHub](https://github.com/YOUR-ORG/YOUR_REPO/settings/secrets/actions) to allow the deployment to run smoothly.
+
+Now you can proceed with the deployment:
 
 1. Update the application image on Docker Hub:
 
@@ -173,7 +235,7 @@ Since we are using a HashiCorp Vault to store the sensitive information, you sho
 $ terraform login
 ```
 
-Then update the [`main.tf`](infra/main.tf) file with the necessary information, such as the image name and tag, the bucket name and your organization details.
+Then update the [terraform (`.tf`) files](infra) with the necessary information, such as the [image name and tag](infra/ec2.tf), the bucket name and your [organization details](infra/backend.tf).
 
 This command will show you what will be created on AWS, you can review it and then confirm the changes.
 
@@ -181,7 +243,7 @@ This command will show you what will be created on AWS, you can review it and th
 $ terraform apply
 ```
 
-6. Build the application (SAM):
+1. Build the application (SAM):
 
 This command will build the application using SAM, you should only need to run this once. Sometimes it throws a huge error, then you should run it again.
 
