@@ -1,0 +1,46 @@
+{
+    "body": "{\"name\":\"My Company\",\"contactInformations\":{\"email\":\"tenant@email.com\",\"phone\":\"+1234567890\"},\"settings\":{\"timezone\":\"UTC\",\"currency\":\"USD\"}}",
+    "resource": "/{proxy+}",
+    "headers": {
+      "accept": "*/*",
+      "Content-Type": "application/json"
+    },
+    "multiValueHeaders": {},
+    "httpMethod": "POST",
+    "isBase64Encoded": false,
+    "path": "/tenant",
+    "pathParameters": null,
+    "queryStringParameters": null,
+    "multiValueQueryStringParameters": null,
+    "stageVariables": null,
+    "requestContext": {
+      "accountId": "",
+      "apiId": "",
+      "authorizer": null,
+      "protocol": "",
+      "httpMethod": "POST",
+      "identity": {
+        "accessKey": null,
+        "accountId": null,
+        "apiKey": null,
+        "apiKeyId": null,
+        "caller": null,
+        "clientCert": null,
+        "cognitoAuthenticationProvider": null,
+        "cognitoAuthenticationType": null,
+        "cognitoIdentityId": null,
+        "cognitoIdentityPoolId": null,
+        "principalOrgId": null,
+        "sourceIp": "",
+        "user": null,
+        "userAgent": "",
+        "userArn": null
+      },
+      "path": "/tenant",
+      "stage": "",
+      "requestId": "",
+      "requestTimeEpoch": 0,
+      "resourceId": "",
+      "resourcePath": ""
+    }
+}

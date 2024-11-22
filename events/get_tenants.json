@@ -1,0 +1,44 @@
+{
+    "body": null,
+    "resource": "/{proxy+}",
+    "path": "/tenant",
+    "httpMethod": "GET",
+    "isBase64Encoded": false,
+    "queryStringParameters": null,
+    "pathParameters": null,
+    "stageVariables": null,
+    "headers": {
+      "accept": "*/*"
+    },
+    "multiValueHeaders": {},
+    "requestContext": {
+      "accountId": "",
+      "apiId": "",
+      "authorizer": null,
+      "protocol": "",
+      "httpMethod": "GET",
+      "identity": {
+        "accessKey": null,
+        "accountId": null,
+        "apiKey": null,
+        "apiKeyId": null,
+        "caller": null,
+        "clientCert": null,
+        "cognitoAuthenticationProvider": null,
+        "cognitoAuthenticationType": null,
+        "cognitoIdentityId": null,
+        "cognitoIdentityPoolId": null,
+        "principalOrgId": null,
+        "sourceIp": "",
+        "user": null,
+        "userAgent": "",
+        "userArn": null
+      },
+      "path": "/tenant",
+      "stage": "",
+      "requestId": "",
+      "requestTimeEpoch": 0,
+      "resourceId": "",
+      "resourcePath": ""
+    }
+}

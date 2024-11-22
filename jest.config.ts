@@ -11,7 +11,7 @@ export default {
     collectCoverage: true,
     coverageDirectory: 'coverage',
     coverageProvider: 'v8',
-    testMatch: ['**/tests/unit/*.test.ts', '**/src/**/*.spec.ts'],
+    testMatch: ['**/tests/**/*.test.ts', '**/src/**/*.spec.ts'],
     preset: 'ts-jest',
     testEnvironment: 'node',
 };
