@@ -41,6 +41,10 @@ jobs:
     - name: Set up AWS CLI
       run: aws configure set region us-east-1
 
+    # Install npm dependencies
+    - name: Install npm dependencies
+      run: npm install
+
     # Checks that all SAM configuration files adhere to a canonical format
     - name: SAM Validate
       run: sam validate --config-file samconfig.toml --region us-east-1
