@@ -11,34 +11,34 @@ export class TransactionEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column('decimal')
     salesPrice: number;
 
     @Column({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
     createdAt: Date;
 
-    @Column()
+    @Column('varchar')
     status: string;
 
-    @Column({ nullable: true })
+    @Column('int', { nullable: true })
     buyerId: number;
 
     @ManyToOne(() => UserEntity, (userEntity) => userEntity.purchases)
     buyer: UserEntity;
 
-    @Column()
+    @Column('int')
     ticketId: number;
     
     @OneToOne(() => TicketEntity, (ticketEntity) => ticketEntity.transaction)
     ticket: TicketEntity;
 
-    @Column()
+    @Column('int')
     tenantId: number;
 
     @ManyToOne(() => TenantEntity, (tenantEntity) => tenantEntity.sales)
     tenant: TenantEntity;
 
-    @Column({ nullable: true })
+    @Column('int', { nullable: true })
     evaluationId: number;
 
     @OneToOne(() => EvaluationEntity, (evaluation) => evaluation.transaction)

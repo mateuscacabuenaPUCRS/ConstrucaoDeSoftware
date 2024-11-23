@@ -8,16 +8,14 @@ export class EventEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column('varchar')
   name: string;
 
-  @Column()
+  @Column('varchar')
   type: string;
 
-  @Column()
+  @Column('varchar')
   location: string;
-
-  //TODO: Definir uma coluna que atualiza automaticamente a data e hora em cada modificação.
 
   @Column({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
   createdAt: Date;
@@ -25,7 +23,7 @@ export class EventEntity {
   @OneToMany(() => TicketEntity, (ticketEntity) => ticketEntity.event)
   tickets: TicketEntity[];
 
-  @Column({ nullable: true })
+  @Column('int', { nullable: true })
   tenantId: number;
 
   @ManyToOne(() => TenantEntity, (tenant) => tenant.events)

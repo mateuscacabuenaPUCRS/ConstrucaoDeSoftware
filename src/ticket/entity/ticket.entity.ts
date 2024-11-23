@@ -7,9 +7,7 @@ import {
 } from "typeorm";
 
 import { EventEntity } from "../../event/entity/event.entity";
-
 import { UserEntity } from "../../user/entity/user.entity";
-
 import { TransactionEntity } from "../../transaction/entity/transaction.entity";
 import { TenantEntity } from "../../tenant/entity/tenant.entity";
 
@@ -18,22 +16,22 @@ export class TicketEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column('decimal')
   originalPrice: number;
 
-  @Column()
+  @Column('int')
   verificationCode: number;
 
-  @Column()
+  @Column('varchar')
   status: string;
 
-  @Column({ nullable: true })
+  @Column('int', { nullable: true })
   eventId: number;
 
   @ManyToOne(() => EventEntity, (event) => event.tickets)
   event: EventEntity;
 
-  @Column({ nullable: true })
+  @Column('int', { nullable: true })
   sellerId: number;
 
   @ManyToOne(() => UserEntity, (userEntity) => userEntity.ticketsForSale)
@@ -45,7 +43,7 @@ export class TicketEntity {
   )
   transaction: TransactionEntity;
 
-  @Column({ nullable: true })
+  @Column('int', { nullable: true })
   tenantId: number;
 
   @ManyToOne(() => TenantEntity, (tenantEntity) => tenantEntity.tickets)
