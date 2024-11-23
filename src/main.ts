@@ -1,3 +1,5 @@
+// This will be used for TypeORM
+import 'reflect-metadata';
 import { writeFileSync } from 'fs';
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import express from 'express';
