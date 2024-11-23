@@ -4,16 +4,16 @@ Description: >
   csw24-grupob
 
   Sample SAM Template for csw24-grupob
-  
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+
 Globals:
   Function:
     Timeout: 10
 
 Resources:
   HelloWorldFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function
     Properties:
+      Timeout: 3
       CodeUri: ../src
       Handler: main.lambdaHello
       Runtime: nodejs18.x
@@ -22,11 +22,11 @@ Resources:
         - x86_64
       Events:
         HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Api
           Properties:
             Path: /hello
             Method: get
-    Metadata: # Manage esbuild properties
+    Metadata:
       BuildMethod: esbuild
       BuildProperties:
         EntryPoints: 
@@ -37,29 +37,32 @@ Resources:
           - "class-transformer"
           - "class-validator"
 
-  # TicketsFunction:
-  #   Type: AWS::Serverless::Function
-  #   Properties:
-  #     CodeUri: ../
-  #     Handler: ./src/main.lambdaHandler
-  #     Runtime: nodejs18.x
-  #     Role: arn:aws:iam::055848354853:role/LabRole
-  #     Architectures:
-  #       - x86_64
-  #     Events:
-  #       Tickets:
-  #         Type: Api
-  #         Properties:
-  #           Path: /{proxy+}
-  #           Method: any
-  #   Metadata:
-  #     BuildMethod: esbuild
-  #     BuildProperties:
-  #       Minify: true
-  #       Target: "es2020"
-  #       Sourcemap: true
-  #       EntryPoints: 
-  #       - src/main.ts
+  TicketsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Timeout: 15
+      CodeUri: ../src
+      Handler: main.lambdaHandler
+      Runtime: nodejs18.x
+      Role: arn:aws:iam::055848354853:role/LabRole
+      Architectures:
+        - x86_64
+      Events:
+        Tickets:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: any
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints: 
+          - main.ts
+        External:
+          - "@nestjs/microservices"
+          - "@nestjs/websockets"
+          - "class-transformer"
+          - "class-validator"
 
 Outputs:
   HelloWorldApi:
@@ -68,6 +71,6 @@ Outputs:
   HelloWorldFunction:
     Description: "Hello World Lambda Function ARN"
     Value: !GetAtt HelloWorldFunction.Arn
-  # TicketsFunction:
-  #   Description: "Tickets Lambda Function ARN"
-  #   Value: !GetAtt TicketsFunction.Arn
+  TicketsFunction:
+    Description: "Tickets Lambda Function ARN"
+    Value: !GetAtt TicketsFunction.Arn
