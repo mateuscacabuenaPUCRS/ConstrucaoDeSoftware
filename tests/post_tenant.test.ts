@@ -1,7 +1,7 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { lambdaHandler } from '../src/main';
 import { expect, describe, it } from '@jest/globals';
-import postTenantEvent from '../events/post_tenant.json';
+import postTenantEvent from '../lambda/events/post_tenant.json';
 
 describe('PostTenant Lambda Function', function () {
     it.skip('should return a successful response', async () => {
