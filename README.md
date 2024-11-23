@@ -248,7 +248,7 @@ $ terraform apply
 This command will build the application using SAM, you should only need to run this once. Sometimes it throws a huge error, then you should run it again.
 
 ```bash
-$ sam build
+$ sam build -m ../package.json
 ```
 
 7. Deploy the application (SAM):
