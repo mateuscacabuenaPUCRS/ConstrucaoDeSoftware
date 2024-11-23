@@ -9,5 +9,6 @@ esbuild.build({
   platform: 'node',
   sourcemap: true,
   target: 'node18',
+  tsconfig: 'tsconfig.json',
   plugins: [nodeExternalsPlugin()],
 }).catch(() => process.exit(1));
