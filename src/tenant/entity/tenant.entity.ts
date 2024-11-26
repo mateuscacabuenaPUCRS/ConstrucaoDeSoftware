@@ -10,19 +10,19 @@ export class TenantEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar')
+  @Column({ type: 'varchar' })
   name: string;
 
-  @Column('varchar')
+  @Column({ type: 'varchar' })
   email: string;
 
-  @Column('varchar')
+  @Column({ type: 'varchar' })
   phone: string;
 
-  @Column('varchar')
+  @Column({ type: 'varchar' })
   timezone: string;
 
-  @Column('varchar')
+  @Column({ type: 'varchar' })
   currency: string;
 
   @OneToMany(() => UserEntity, (user) => user.tenantEntity)

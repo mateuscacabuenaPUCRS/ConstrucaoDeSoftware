@@ -16,16 +16,16 @@ export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar')
+  @Column({ type: 'varchar' })
   email: string;
 
-  @Column('varchar')
+  @Column({ type: 'varchar' })
   name: string;
 
-  @Column('boolean', {default: false})
+  @Column({ type: 'boolean', default: false })
   receiveNotifications: boolean;
 
-  @Column('int', { nullable: true })
+  @Column({ type: 'int', nullable: true })
   tenantId: number;
 
   @ManyToOne(() => TenantEntity, (tenantEntity) => tenantEntity.users)

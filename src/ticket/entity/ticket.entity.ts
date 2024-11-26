@@ -16,22 +16,22 @@ export class TicketEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('decimal')
+  @Column({ type: 'decimal' })
   originalPrice: number;
 
-  @Column('int')
+  @Column({ type: 'int' })
   verificationCode: number;
 
-  @Column('varchar')
+  @Column({ type: 'varchar' })
   status: string;
 
-  @Column('int', { nullable: true })
+  @Column({ type: 'int', nullable: true })
   eventId: number;
 
   @ManyToOne(() => EventEntity, (event) => event.tickets)
   event: EventEntity;
 
-  @Column('int', { nullable: true })
+  @Column({ type: 'int', nullable: true })
   sellerId: number;
 
   @ManyToOne(() => UserEntity, (userEntity) => userEntity.ticketsForSale)
@@ -43,7 +43,7 @@ export class TicketEntity {
   )
   transaction: TransactionEntity;
 
-  @Column('int', { nullable: true })
+  @Column({ type: 'int', nullable: true })
   tenantId: number;
 
   @ManyToOne(() => TenantEntity, (tenantEntity) => tenantEntity.tickets)

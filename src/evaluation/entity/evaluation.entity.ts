@@ -8,22 +8,22 @@ export class EvaluationEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('int')
+  @Column({ type: 'int' })
   rating: number;
 
   @Column('text')
   comment: string;
 
-  @Column({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @Column('int')
+  @Column({ type: 'int' })
   transactionId: number;
 
   @OneToOne(() => TransactionEntity, (transaction) => transaction.evaluation)
   transaction: TransactionEntity;
 
-  @Column('int')
+  @Column({ type: 'int' })
   sellerId: number;
 
   @ManyToOne(() => UserEntity, (seller) => seller.evaluations)

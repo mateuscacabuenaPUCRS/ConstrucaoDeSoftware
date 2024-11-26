@@ -8,22 +8,22 @@ export class EventEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar')
+  @Column({ type: 'varchar' })
   name: string;
 
-  @Column('varchar')
+  @Column({ type: 'varchar' })
   type: string;
 
-  @Column('varchar')
+  @Column({ type: 'varchar' })
   location: string;
 
-  @Column({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
   @OneToMany(() => TicketEntity, (ticketEntity) => ticketEntity.event)
   tickets: TicketEntity[];
 
-  @Column('int', { nullable: true })
+  @Column({ type: 'int', nullable: true })
   tenantId: number;
 
   @ManyToOne(() => TenantEntity, (tenant) => tenant.events)
