@@ -2,6 +2,7 @@
 coverage
 docs
 infra
+lambda
 scripts
 
 # Ignore .aws and .terraform directories
