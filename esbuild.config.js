@@ -7,7 +7,6 @@ esbuild.build({
   minify: true,
   outdir: 'dist',
   platform: 'node',
-  sourcemap: true,
   target: 'node18',
   tsconfig: 'tsconfig.json',
   plugins: [nodeExternalsPlugin()],
