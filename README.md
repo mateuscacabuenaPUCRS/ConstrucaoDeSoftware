@@ -14,6 +14,7 @@
   - [More About Terraform](#more-about-terraform)
   - [More About AWS CLI](#more-about-aws-cli)
   - [More About SAM](#more-about-sam)
+  - [Terraform and SAM?](#terraform-and-sam)
 - [How to Run](#how-to-run)
   - [How to Deploy](#how-to-deploy)
     - [AWS Credentials](#aws-credentials)
@@ -39,7 +40,7 @@ Let's talk about the main entities of the application:
 
 #### Database Diagram
 
-![Database Entities Diagram](./docs/Construção%20de%20Software%20-%20T1.drawio.png)
+![Database Entities Diagram](./docs/Construcao_de_Software_-_T1.drawio.png)
 
 #### Tenant
 
@@ -94,7 +95,11 @@ The AWS CLI is used to interact with AWS services, it can be used for finer cont
 
 ### More About [SAM](https://aws.amazon.com/serverless/sam/)
 
-The AWS Serverless Application Model (SAM) is used to deploy the application as a serverless application on AWS. It is used to create the necessary resources for the application to run on the cloud. It is being used to deploy the application on AWS.
+The AWS Serverless Application Model (SAM) is used to deploy the application as a serverless application on AWS. It creates the necessary resources for the application to run on the cloud and is being used to deploy two lambda functions that will be invoked by an API Gateway.
+
+### Terraform and SAM?
+
+Why are we using both Terraform and SAM? The answer is simple: Terraform is used to create the infrastructure on AWS, while SAM is used to deploy the application as a serverless application on AWS. They are used together to create a complete environment for the application to run on the cloud either as a server or as a serverless application.
 
 ## How to Run
 
@@ -102,7 +107,7 @@ Now that you have all the necessary tools installed, you can run the application
 To start the application with Docker, simply run the following command:
 
 ```bash
-$ docker compose up
+$ docker compose up --build
 ```
 
 That's it! The application should be running on http://localhost:8000.
