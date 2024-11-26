@@ -52,4 +52,4 @@ jobs:
     # Deploy the SAM application
     - name: SAM Deploy
       run: sam deploy --config-file samconfig.toml --region us-east-1 --no-confirm-changeset || \
-            if [ $? -eq 1 ]; then echo "No changes to deploy"; else exit 1; fi
+          { if [ $? -eq 1 ]; then echo "No changes to deploy"; else exit 1; fi; }
