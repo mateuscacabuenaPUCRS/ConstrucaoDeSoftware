@@ -1,0 +1,9 @@
+# Ensure that all shell scripts use Unix line endings (LF)
+*.sh text eol=lf
+
+# Optional: Force all text files to use LF line endings
+* text eol=lf
+
+# Optional: Ensure some files use binary mode (no modification)
+*png binary
+*.pem binary

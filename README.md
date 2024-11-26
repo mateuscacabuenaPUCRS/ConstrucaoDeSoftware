@@ -248,6 +248,29 @@ This command will show you what will be created on AWS, you can review it and th
 $ terraform apply
 ```
 
+(Optional) 
+Access your instance (under the EC2 tab) on the AWS console to get the public IP address and access the application.
+
+To enter into the instance move back to the root directory and run the following command:
+
+```bash
+# Linux
+$ ./scripts/access-instance.sh
+
+# Windows (Powershell)
+$ .\scripts\access-instance.ps1
+```
+
+Known issues with PowerShell:
+
+- If you get an error message saying that running scripts is disabled on your system, you can run the following command to enable it for the current session:
+
+```bash
+$ Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+```
+
+- If you get an error saying permission is denied, open the file with file explorer, right click the my-key.pem file, go to properties, security, edit, and check that your user has at least read & execute permissions.
+
 1. Build the application (SAM):
 
 This command will build the application using SAM, you should only need to run this once. Sometimes it throws a huge error, then you should run it again.
@@ -264,15 +287,7 @@ This command will deploy the application on AWS using SAM, you will be asked to 
 $ sam deploy --guided
 ```
 
-That's it! The application should be running on the cloud now.
-
-Access your instance (under the EC2 tab) on the AWS console to get the public IP address and access the application.
-
-To enter into the instance, you can use the following command:
-
-```bash
-$ ssh -i .aws/my-key.pem ubuntu@{{public_ip}}
-```
+That's it! The serverless application should be running on AWS.
 
 ## Cheat Sheet
 
@@ -327,7 +342,7 @@ $ sam build
 $ sam deploy --guided
 
 # Remove the application
-$ sam delete
+$ sam delete --stack-name {{stack_name}}
 ```
 
 ### Run Tests

@@ -1,5 +1,6 @@
 # AWS Credentials and Key Pairs
 .aws/credentials
+ec2_public_ip.txt
 *.pem
 
 # Local .env files
