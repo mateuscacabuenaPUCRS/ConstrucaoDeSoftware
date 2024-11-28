@@ -43,9 +43,3 @@ output "ecs_cluster_arn" {
 output "vpc_cider_block" {
   value = module.vpc.vpc_cidr_block
 }
-
-resource "local_file" "private_key_pem" {
-  filename        = "${path.module}/my-key.pem"
-  content         = tls_private_key.my_key.private_key_pem
-  file_permission = "0400"
-}
