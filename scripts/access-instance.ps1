@@ -36,6 +36,7 @@ Set-Content -Path $PRIVATE_KEY_FILE -Value $private_key -Force
 
 # Set permissions for the private key (equivalent to chmod 400)
 Write-Host "Setting permissions for the private key..."
+icacls $PRIVATE_KEY_FILE /inheritance:r
 icacls $PRIVATE_KEY_FILE /grant:r "$($env:USERDOMAIN)\$($env:USERNAME):(F)"
 
 # Change to the Terraform directory again to fetch the IP
