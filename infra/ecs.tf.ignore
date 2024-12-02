@@ -1,7 +1,3 @@
-locals {
-  container_name = "ecsdemo-frontend"
-}
-
 module "ecs" {
   source = "terraform-aws-modules/ecs/aws"
 
@@ -18,7 +14,7 @@ module "ecs" {
           cpu       = 512
           memory    = 1024
           essential = true
-          image     = "public.ecr.aws/aws-containers/ecsdemo-frontend:776fd50"
+          image     = "${local.user_id}.dkr.ecr.${local.region}.amazonaws.com/${local.container_name}:latest"
 
           port_mappings = [
             {
@@ -42,8 +38,8 @@ module "ecs" {
       }
 
       # Roles attempted: LabRole, ecs.amazonaws.com/AWSServiceRoleForECS, vocareum, AdministratorAccess
-      task_execution_role_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/LabRole"
-      task_role_arn           = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/LabRole"
+      task_execution_role_arn = "arn:aws:iam::${local.user_id}:role/LabRole"
+      task_role_arn           = "arn:aws:iam::${local.user_id}:role/LabRole"
     }
   }
 

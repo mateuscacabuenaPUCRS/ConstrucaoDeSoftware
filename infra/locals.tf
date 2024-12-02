@@ -3,7 +3,10 @@ locals {
   environment = var.environment
   name        = "${local.environment}-${var.project_name}"
 
-  container_port = 3000
+  container_name = "${local.name}-ecr"
+  container_port = 8000
+
+  user_id = data.aws_caller_identity.current.account_id
 
   tags = {
     Name       = local.name

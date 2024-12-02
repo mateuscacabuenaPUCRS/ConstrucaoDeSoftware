@@ -10,9 +10,11 @@ module "alb" {
 
   security_groups = [aws_security_group.security_group.id]
 
+  enable_deletion_protection = false
+
   listeners = {
     http = {
-      port     = 80
+      port     = 8000
       protocol = "HTTP"
 
       forward = {
@@ -24,7 +26,7 @@ module "alb" {
   target_groups = {
     ecs = {
       backend_protocol                  = "HTTP"
-      backend_port                      = local.container_port
+      backend_port                      = 8000
       target_type                       = "ip"
       deregistration_delay              = 5
       load_balancing_cross_zone_enabled = true
