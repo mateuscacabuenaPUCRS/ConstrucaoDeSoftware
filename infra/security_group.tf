@@ -1,21 +1,32 @@
-resource "aws_security_group" "csw24_ticket_ports_access" {
-  name        = "csw24-ticket-ports-access"
+resource "aws_security_group" "security_group" {
+  name        = "${local.name}-security-group"
   description = "Allows API and SSH access"
 
-  # API
-  ingress {
-    description = "API"
-    from_port   = 8000
-    to_port     = 8000
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  vpc_id = module.vpc.vpc_id
 
   # SSH
   ingress {
     description = "SSH"
     from_port   = 22
     to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # HTTP
+  ingress {
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # API
+  ingress {
+    description = "API"
+    from_port   = 8000
+    to_port     = 8000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }

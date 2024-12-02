@@ -13,3 +13,21 @@ variable "AWS_SESSION_TOKEN" {
   type        = string
   default     = null
 }
+
+variable "region" {
+  description = "AWS region to deploy to"
+  type        = string
+  default     = "us-east-1"
+}
+
+variable "environment" {
+  description = "Environment to deploy to"
+  type        = string
+  default     = "dev"
+}
+
+variable "project_name" {
+  description = "Name of the project"
+  type        = string
+  default     = "csw24-grupob"
+}
