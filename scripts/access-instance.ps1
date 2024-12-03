@@ -22,7 +22,7 @@ if (-not (Test-Path -Path $awsDir)) {
 
 # Fetch and save the private key from Terraform output
 Write-Host "Fetching the private key from Terraform outputs..."
-$private_key = terraform output -raw private_key
+$private_key = terraform output -raw private_key_pem
 $private_key = $private_key.Trim()
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Unable to fetch private key from Terraform."

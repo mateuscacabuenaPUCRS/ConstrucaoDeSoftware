@@ -11,7 +11,7 @@ mkdir -p ./.aws
 
 # Retrieve and save the private key
 echo "Fetching the private key from Terraform outputs..."
-private_key=$(terraform output -raw private_key)
+private_key=$(terraform output -raw private_key_pem)
 if [[ $? -ne 0 || -z "$private_key" ]]; then
   echo "Error: Unable to fetch private key from Terraform."
   exit 1
