@@ -25,8 +25,8 @@ resource "aws_security_group" "security_group" {
   # API
   ingress {
     description = "API"
-    from_port   = 8000
-    to_port     = 8000
+    from_port   = local.container_port
+    to_port     = local.container_port
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }

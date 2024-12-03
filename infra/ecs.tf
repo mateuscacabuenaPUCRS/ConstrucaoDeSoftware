@@ -18,8 +18,8 @@ resource "aws_ecs_task_definition" "task" {
     image     = "${local.user_id}.dkr.ecr.${local.region}.amazonaws.com/${local.container_name}:latest"
 
     portMappings = [{
-      containerPort = 8000
-      hostPort      = 8000
+      containerPort = local.container_port
+      hostPort      = local.container_port
       protocol      = "tcp"
     }]
   }])
@@ -46,7 +46,7 @@ resource "aws_ecs_service" "ecs_service" {
   load_balancer {
     target_group_arn = module.alb.target_groups["ecs"].arn
     container_name   = local.container_name
-    container_port   = 8000
+    container_port   = local.container_port
   }
 
   tags = local.tags

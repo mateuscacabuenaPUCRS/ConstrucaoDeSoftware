@@ -14,7 +14,7 @@ module "alb" {
 
   listeners = {
     http = {
-      port     = 8000
+      port     = local.container_port
       protocol = "HTTP"
 
       forward = {
@@ -26,7 +26,7 @@ module "alb" {
   target_groups = {
     ecs = {
       backend_protocol                  = "HTTP"
-      backend_port                      = 8000
+      backend_port                      = local.container_port
       target_type                       = "ip"
       deregistration_delay              = 5
       load_balancing_cross_zone_enabled = true
