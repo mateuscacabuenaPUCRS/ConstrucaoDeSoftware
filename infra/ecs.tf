@@ -17,7 +17,7 @@ resource "aws_ecs_task_definition" "task" {
     essential = true
     image     = "${local.user_id}.dkr.ecr.${local.region}.amazonaws.com/${local.container_name}:latest"
 
-    port_mappings = [{
+    portMappings = [{
       containerPort = 8000
       hostPort      = 8000
       protocol      = "tcp"

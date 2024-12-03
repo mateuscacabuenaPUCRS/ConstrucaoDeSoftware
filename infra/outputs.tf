@@ -41,32 +41,61 @@ output "database_subnets" {
   value = module.vpc.database_subnets
 }
 
-# output "cluster_arn" {
-#   description = "ARN that identifies the cluster"
-#   value       = module.ecs.cluster_arn
-# }
+################################################################
+##############            ECS Outputs               ############
+################################################################
 
-# output "cluster_id" {
-#   description = "ID that identifies the cluster"
-#   value       = module.ecs.cluster_id
-# }
+output "ecs_task_definition_arn" {
+  description = "ARN of the ECS Task Definition"
+  value       = aws_ecs_task_definition.task.arn
+}
 
-# output "cluster_name" {
-#   description = "Name that identifies the cluster"
-#   value       = module.ecs.cluster_name
-# }
+output "ecs_task_definition_family" {
+  description = "Family of the ECS Task Definition"
+  value       = aws_ecs_task_definition.task.family
+}
 
-# output "cluster_capacity_providers" {
-#   description = "Map of cluster capacity providers attributes"
-#   value       = module.ecs.cluster_capacity_providers
-# }
+output "ecs_task_definition_revision" {
+  description = "Revision number of the ECS Task Definition"
+  value       = aws_ecs_task_definition.task.revision
+}
 
-# output "cluster_autoscaling_capacity_providers" {
-#   description = "Map of capacity providers created and their attributes"
-#   value       = module.ecs.autoscaling_capacity_providers
-# }
+output "ecs_service_name" {
+  description = "Name of the ECS Service"
+  value       = aws_ecs_service.ecs_service.name
+}
 
-# output "services" {
-#   description = "Map of services created and their attributes"
-#   value       = module.ecs.services
-# }
+output "ecs_service_desired_count" {
+  description = "Desired count of the ECS Service"
+  value       = aws_ecs_service.ecs_service.desired_count
+}
+
+output "ecs_service_task_definition" {
+  description = "Task definition used by the ECS Service"
+  value       = aws_ecs_service.ecs_service.task_definition
+}
+
+output "ecs_service_load_balancer" {
+  description = "Load Balancer associated with the ECS Service"
+  value       = aws_ecs_service.ecs_service.load_balancer
+}
+
+output "ecs_service_network_configuration" {
+  description = "Network configuration of the ECS Service"
+  value       = aws_ecs_service.ecs_service.network_configuration
+}
+
+output "ecs_service_role" {
+  description = "IAM role associated with the ECS Service"
+  value       = aws_ecs_service.ecs_service.iam_role
+}
+
+output "ecs_cluster_name" {
+  description = "Name of the ECS Cluster"
+  value       = aws_ecs_cluster.ecs_cluster.name
+}
+
+output "ecs_cluster_arn" {
+  description = "ARN of the ECS Cluster"
+  value       = aws_ecs_cluster.ecs_cluster.arn
+}
