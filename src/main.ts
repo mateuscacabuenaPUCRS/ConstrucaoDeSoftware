@@ -36,7 +36,10 @@ async function bootstrap() {
 
   await app.listen(8000);
 }
-bootstrap();
+
+if (process.env.NODE_ENV !== 'test') {
+  bootstrap();
+}
 
 export const lambdaHandler = async (event: APIGatewayProxyEvent, context: unknown = {}): Promise<APIGatewayProxyResult> => {
   const server = express();

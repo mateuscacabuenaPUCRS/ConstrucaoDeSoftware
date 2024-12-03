@@ -1,12 +1,16 @@
-resource "aws_instance" "csw24-grupob-ticket" {
+resource "aws_instance" "ec2" {
   ami           = "ami-007855ac798b5175e" # Ubuntu 22.04 LTS
   instance_type = "t2.micro"
   key_name      = aws_key_pair.my_key_pair.key_name
 
-  vpc_security_group_ids = [aws_security_group.csw24_ticket_ports_access.id]
+  associate_public_ip_address = true
+
+  subnet_id = module.vpc.public_subnets[0]
+
+  vpc_security_group_ids = [aws_security_group.security_group.id]
 
   tags = {
-    Name = "csw24-grupob-ticket"
+    Name = "${local.name}-ec2"
   }
 
   # User data script to install Docker and start your container
@@ -33,7 +37,7 @@ resource "aws_instance" "csw24-grupob-ticket" {
     touch success.txt
 
     # Download docker-compose.yml from S3 (if bucket name changes, this line has to be updated manually)
-    curl -O https://csw24-ticket-docker-compose-bucket.s3.amazonaws.com/docker-compose.yml
+    curl -O https://csw24-docker-compose-bucket.s3.amazonaws.com/docker-compose.yml
 
     # Start container
     sudo docker-compose up -d

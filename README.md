@@ -199,14 +199,18 @@ For this step you should have a Docker Hub account and be logged in on the termi
 $ docker login
 ```
 
-Remember to change the image name and tag variables in the [`update-image.sh`](scripts/update-image.sh) script to your own image name and tag.
-This is the most important step, you must update the image on Docker Hub so that the instance can download it and run the application with the latest changes.
+Remember to change the image name and tag variables in the [`update-image-dockerhub.sh`](scripts/update-image.sh) and [`update-image-ecr.sh`] scripts to your own image name and tag.
+This is the most important step, you must update the image on Docker Hub / ECR so that the instance can download it and run the application with the latest changes.
 
 ```bash
-$ scripts/update-image.sh
+$ scripts/update-image-dockerhub.sh
 ```
 
-2. (Optional) Update the `docker-compose` file on the s3 bucket:
+```bash
+$ scripts/update-image-ecr.sh
+```
+
+1. (Optional) Update the `docker-compose` file on the s3 bucket:
 
 Remember to change the bucket name variable in the [`upload-compose.sh`](scripts/upload-compose.sh) script to your own bucket name.
 Run this only if you have made changes to the `docker-compose.prod.yml` file and want to update the one on the s3 bucket.
